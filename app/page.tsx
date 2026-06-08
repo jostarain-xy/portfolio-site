@@ -15,7 +15,7 @@ const featuredWork = [
     role: "导演 / 摄影 / 剪辑 / 成片输出",
     description:
       "为邵阳市自来水宝润二次供水有限责任公司拍摄制作企业宣传片，负责整体拍摄执行与影像呈现。",
-    videoSrc: "/videos/BaoRun.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/BaoRunvideo%20videos.mp4",
   },
   {
     title: "喜哥视界人物访谈：高志凯专题对谈",
@@ -23,7 +23,7 @@ const featuredWork = [
     role: "策划 / 摄影 / 后期剪辑 / 字幕包装",
     description:
       "参与喜哥视界访谈类内容制作，围绕长对谈内容进行结构整理、节奏剪辑和信息强化。",
-    videoSrc: "/videos/5月30日.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/gaozhikai.mp4",
   },
   {
     title: "我们不会明白那曾是一闪而过的夏天",
@@ -31,7 +31,7 @@ const featuredWork = [
     role: "摄影 / 剪辑 / 音乐节奏 / 情绪表达",
     description:
       "以日常影像和情绪片段为基础，通过镜头顺序、音乐节奏和画面停顿建立氛围。",
-    videoSrc: "/videos/我们不会明白那曾是一闪而过的夏天.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/%E6%88%91%E4%BB%AC%E4%B8%8D%E4%BC%9A%E6%98%8E%E7%99%BD%E9%82%A3%E6%9B%BE%E6%98%AF%E4%B8%80%E9%97%AA%E8%80%8C%E8%BF%87%E7%9A%84%E5%A4%8F%E5%A4%A9.mp4",
   },
 ];
 
@@ -167,7 +167,7 @@ export default function Home() {
 <div className="pointer-events-none absolute right-10 top-28 hidden h-28 w-28 rounded-full border border-black/10 md:block" />
 <div className="pointer-events-none absolute right-20 top-40 hidden h-2 w-2 rounded-full bg-signal shadow-[0_0_24px_rgba(55,224,194,0.8)] md:block" />
         <video
-  src="/videos/showreel.mp4"
+  src="https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/showreel.mp4"
   autoPlay
   muted
   loop

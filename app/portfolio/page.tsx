@@ -25,7 +25,7 @@ const works: Work[] = [
     role: "导演 / 摄影 / 剪辑 / 成片输出",
     description:
       "遇见彼此是六十亿分之一的幸运。而双向奔赴的星光，才是真正能穿越时空的永恒。",
-    videoSrc: "/videos/lucky-wedding.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/lucky-wedding.mp4",
     y: 40,
     rotate: -3,
     scale: 0.98,
@@ -36,7 +36,7 @@ const works: Work[] = [
     role: "摄影 / 剪辑 / 音乐节奏 / 情绪表达",
     description:
       "相识相遇相知，一切或许都是命运的安排，而和你在一起的时光，也全都很耀眼。",
-    videoSrc: "/videos/forever.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/forever.mp4",
     y: -60,
     rotate: 2,
     scale: 1,
@@ -46,7 +46,7 @@ const works: Work[] = [
     category: "Creator Short",
     role: "摄影 / 剪辑 / 音乐节奏 / 情绪表达",
     description: "既然注定要分别，那就把快门定格在这个夏天。",
-    videoSrc: "/videos/bali.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/bali.mp4",
     y: 90,
     rotate: -1,
     scale: 0.94,
@@ -57,7 +57,7 @@ const works: Work[] = [
     role: "导演 / 摄影 / 剪辑 / 成片输出",
     description:
       "为邵阳市自来水宝润二次供水有限责任公司拍摄制作企业宣传片，完成企业形象影像呈现。",
-    videoSrc: "/videos/BaoRun.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/BaoRunvideo%20videos.mp4",
     y: -10,
     rotate: 3,
     scale: 0.96,
@@ -67,7 +67,7 @@ const works: Work[] = [
     category: "Interview",
     role: "策划 / 摄影 / 后期剪辑 / 字幕包装",
     description: "围绕长对谈内容进行结构整理、节奏剪辑和信息强化。",
-    videoSrc: "/videos/5月30日.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/gaozhikai.mp4",
     y: -110,
     rotate: -2,
     scale: 0.92,
@@ -78,7 +78,7 @@ const works: Work[] = [
     role: "摄影 / 后期剪辑 / 情绪表达",
     description:
       "喧嚣着蝉鸣、黐人的汗水，冰镇的饮料、发呆的下午...刚在梦里想起的谁，是想起哪样一个夏天。",
-    videoSrc: "/videos/The Summer.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/The%20Summer.mp4",
     y: 120,
     rotate: 2.5,
     scale: 0.95,
@@ -89,7 +89,7 @@ const works: Work[] = [
     role: "摄影 / 分镜脚本",
     description:
       "参与制作《筷至人心》纪录片毕业设计。负责分镜设计与部分镜头拍摄制作。",
-    videoSrc: "/videos/kuaizhi.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/kuaizhi.mp4",
     y: -30,
     rotate: -3,
     scale: 0.9,
@@ -100,7 +100,7 @@ const works: Work[] = [
     role: "场景搭建 / 后期剪辑",
     description:
       "在 UE5 中完成制作了视频中的场景以及摄像机镜头，并完成剪辑成片。",
-    videoSrc: "/videos/jingguan.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/jingguan.mp4",
     y: 70,
     rotate: 2,
     scale: 0.93,
@@ -111,7 +111,7 @@ const works: Work[] = [
     role: "导演 / 剪辑 / 成片输出",
     description:
       "为邵阳市本地茶文化浚泉号雨林铭润品牌茶叶及紫砂壶制作并拍摄商业广告，主要负责导演及后期剪辑。",
-    videoSrc: "/videos/yunwu tea.mp4",
+    videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/yunwu%20tea.mp4",
     y: -80,
     rotate: -1.5,
     scale: 0.94,
