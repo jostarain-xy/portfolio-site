@@ -81,6 +81,19 @@ const introMasonryClasses = [
 
 const profilePhoto = "/images/pic/person.jpg";
 
+const studioSignals = [
+  { label: "影像语气", value: "纪实 / 情绪 / 节奏" },
+  { label: "工作方式", value: "拍摄到剪辑闭环" },
+  { label: "画面偏好", value: "干净构图 / 生活感" },
+];
+
+const timelineFrames = [
+  "/images/pic/03.jpg",
+  "/images/pic/08.jpg",
+  "/images/pic/14.jpg",
+  "/images/pic/21.jpg",
+];
+
 const qaItems = [
   {
     question: "稍微做个自我介绍吧？",
@@ -223,24 +236,50 @@ export default function AboutPage() {
         return;
       }
 
-      gsap.from(".hero-reveal", {
-        opacity: 0,
-        y: 34,
-        filter: "blur(10px)",
-        duration: 0.82,
-        stagger: 0.08,
-        delay: 2.75,
-        ease: "power3.out",
+      const introTimeline = gsap.timeline({
+        defaults: {
+          ease: "power4.out",
+        },
       });
+
+      introTimeline
+        .to(".page-shell", {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.76,
+        }, 0.98)
+        .from(".hero-reveal", {
+          opacity: 0,
+          y: 28,
+          filter: "blur(12px)",
+          duration: 0.78,
+          stagger: 0.055,
+        }, 1.02)
+        .from(".studio-signal", {
+          opacity: 0,
+          y: 18,
+          filter: "blur(8px)",
+          duration: 0.58,
+          stagger: 0.045,
+        }, 1.16)
+        .from(".frame-tile", {
+          opacity: 0,
+          y: 18,
+          scale: 0.96,
+          filter: "blur(8px)",
+          duration: 0.66,
+          stagger: 0.04,
+        }, 1.22);
 
       gsap.utils.toArray<HTMLElement>(".qa-item").forEach((item, index) => {
         gsap.from(item, {
           opacity: 0,
-          y: 48,
-          filter: "blur(10px)",
-          duration: 0.75,
-          delay: index * 0.03,
-          ease: "power3.out",
+          y: 28,
+          filter: "blur(7px)",
+          duration: 0.68,
+          delay: index * 0.025,
+          ease: "power4.out",
           scrollTrigger: {
             trigger: item,
             start: "top 82%",
@@ -252,10 +291,10 @@ export default function AboutPage() {
       gsap.utils.toArray<HTMLElement>(".info-block").forEach((block) => {
         gsap.from(block, {
           opacity: 0,
-          y: 56,
-          filter: "blur(10px)",
-          duration: 0.8,
-          ease: "power3.out",
+          y: 34,
+          filter: "blur(7px)",
+          duration: 0.72,
+          ease: "power4.out",
           scrollTrigger: {
             trigger: block,
             start: "top 82%",
@@ -275,7 +314,7 @@ export default function AboutPage() {
   return (
     <main
       ref={container}
-      className="relative min-h-screen overflow-hidden bg-[#eaf8ff] text-[#10212b]"
+      className="relative min-h-screen overflow-hidden bg-[#edf7fb] text-[#10212b]"
     >
       <section className={`intro-loader fixed inset-0 z-50 overflow-hidden bg-[#b9dfff] text-[#10243a] ${styles.introLoader}`}>
         <div className="relative z-10 grid h-[calc(100vh-78px)] grid-cols-4 grid-rows-[repeat(7,minmax(0,1fr))] gap-1.5 p-1.5 sm:grid-cols-7 sm:grid-rows-[repeat(4,minmax(0,1fr))] md:gap-3 md:p-3">
@@ -338,21 +377,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="cursor-glow pointer-events-none fixed left-0 top-0 z-[1] h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#70d3ff]/28 opacity-0 blur-[90px]" />
-      <div className="pointer-events-none fixed inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(18,92,125,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(18,92,125,0.16)_1px,transparent_1px)] [background-size:120px_120px]" />
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_72%_16%,rgba(112,211,255,0.34),transparent_31%),radial-gradient(circle_at_8%_70%,rgba(255,255,255,0.72),transparent_36%),linear-gradient(to_bottom,#eaf8ff,#dff3ff_52%,#f7fbff)]" />
+      <div className="cursor-glow pointer-events-none fixed left-0 top-0 z-[1] h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#37e0c2]/18 opacity-0 blur-[96px]" />
+      <div className="pointer-events-none fixed inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(16,33,43,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(16,33,43,0.10)_1px,transparent_1px)] [background-size:96px_96px]" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_12%,rgba(55,224,194,0.22),transparent_26%),radial-gradient(circle_at_12%_74%,rgba(140,198,255,0.28),transparent_33%),linear-gradient(135deg,#f7fbff_0%,#e7f5fb_46%,#f8fbf8_100%)]" />
+      <div className="pointer-events-none fixed inset-x-0 top-24 z-[1] h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
 
-      <section className={`page-shell relative z-10 mx-auto max-w-7xl px-6 py-24 ${styles.pageShell}`}>
-        <section className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div>
-            <div className="hero-reveal mb-10 flex items-start justify-between border-b border-black/10 pb-6">
+      <section className={`page-shell relative z-10 mx-auto max-w-[1380px] px-5 py-14 md:px-8 md:py-24 ${styles.pageShell}`}>
+        <section className="grid gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.72fr)] lg:items-start">
+          <div className="rounded-[34px] border border-black/10 bg-white/[0.48] p-4 shadow-[0_26px_90px_rgba(15,23,42,0.07)] backdrop-blur-xl md:p-8">
+            <div className="hero-reveal mb-5 flex items-start justify-between border-b border-black/10 pb-4 md:mb-8 md:pb-6">
               <div>
                 <p className="text-[11px] font-semibold tracking-[0.34em] text-signal">
                   ABOUT / Q&A
                 </p>
 
                 <div className="mt-4 leading-none text-[#111827]">
-                  <span className="block text-[42px] font-black tracking-[-0.08em] md:text-[56px]">
+                  <span className="block text-[34px] font-black tracking-[-0.08em] md:text-[56px]">
                     关于我
                   </span>
                 </div>
@@ -364,30 +404,107 @@ export default function AboutPage() {
             </div>
 
             <div className="qa-intro">
-              <h1 className="hero-reveal max-w-3xl text-4xl font-semibold leading-[1.06] tracking-[-0.06em] text-[#111827] md:text-6xl">
-                “音乐是我的输氧管
-                <br />
-                摄影是我的呼吸机”
-              </h1>
+              <div className="hero-reveal relative max-w-4xl border-y border-black/10 py-4 md:py-5">
+                <div className="mb-3 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-400">
+                  <span>Personal Statement</span>
+                  <span className="h-px flex-1 bg-black/10" />
+                  <span className="text-signal">01</span>
+                </div>
 
-              <p className="hero-reveal mt-5 max-w-2xl text-base leading-8 text-slate-600">
+                <h1
+                  className="relative text-[30px] font-semibold leading-[1.12] tracking-[-0.045em] text-[#111827] md:text-[clamp(38px,4.8vw,58px)]"
+                  style={{
+                    fontFamily:
+                      '"STSong", "Songti SC", "Noto Serif SC", "Source Han Serif SC", serif',
+                  }}
+                >
+                  <span className="absolute -left-1 top-0 text-[0.72em] text-signal/70">
+                    “
+                  </span>
+                  <span className="relative ml-5 inline-block">
+                    音乐是我的
+                    <span className="mx-2 inline-block border-b border-signal/50 px-1 italic text-transparent [-webkit-text-stroke:0.9px_currentColor]">
+                      输氧管
+                    </span>
+                  </span>
+                  <br />
+                  <span className="relative ml-5 inline-block">
+                    摄影是我的
+                    <span className="mx-2 inline-block bg-[#101820] px-3 py-0.5 text-white shadow-[0_12px_34px_rgba(15,23,42,0.13)]">
+                      呼吸机
+                    </span>
+                  </span>
+                  <span className="text-[0.72em] text-signal/70">”</span>
+                </h1>
+              </div>
+
+              <p className="hero-reveal mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:mt-6 md:text-base md:leading-8">
                 比起一份传统简历，我更想用轻松一点的方式，介绍我的专业背景、创作习惯和我对影像的理解。
               </p>
+
+              <div className="mt-5 grid grid-cols-3 gap-2 md:mt-7 md:gap-3">
+                {studioSignals.map((item) => (
+                  <div
+                    key={item.label}
+                    className="studio-signal rounded-[16px] border border-black/10 bg-white/62 p-3 shadow-[0_14px_38px_rgba(15,23,42,0.05)] md:rounded-[18px] md:p-4"
+                  >
+                    <p className="text-[9px] font-semibold tracking-[0.18em] text-slate-400 md:text-[10px] md:tracking-[0.24em]">
+                      {item.label}
+                    </p>
+                    <p className="mt-2 text-xs font-semibold leading-5 tracking-[-0.03em] text-[#111827] md:mt-3 md:text-sm">
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="hero-reveal mt-4 overflow-hidden rounded-[26px] border border-black/10 bg-[#101820] p-3 text-white shadow-[0_20px_70px_rgba(15,23,42,0.16)] lg:hidden">
+                <div className="grid grid-cols-[0.84fr_1fr] gap-3">
+                  <img
+                    src={profilePhoto}
+                    alt="个人介绍照片"
+                    className="aspect-[4/5] h-full w-full rounded-[18px] object-cover"
+                  />
+                  <div className="flex min-w-0 flex-col justify-between py-1">
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-signal">
+                        ZHU XINGYU
+                      </p>
+                      <p className="mt-2 text-xl font-semibold tracking-[-0.05em]">
+                        摄影 / 剪辑
+                      </p>
+                      <p className="mt-2 text-xs leading-5 text-white/62">
+                        用画面记录生活，用节奏整理情绪。
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {timelineFrames.map((frame, index) => (
+                        <img
+                          key={frame}
+                          src={frame}
+                          alt={`创作帧 ${index + 1}`}
+                          className="frame-tile aspect-square rounded-[10px] object-cover"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-10 space-y-10">
+            <div className="mt-9 grid gap-3">
               {qaItems.map((item, index) => (
                 <article
                   key={item.question}
-                  className="qa-item group relative overflow-hidden border-t border-black/10 px-4 py-6 transition duration-300 hover:border-signal/50 hover:bg-white/35"
+                  className="qa-item group relative overflow-hidden rounded-[24px] border border-black/10 bg-white/46 px-5 py-5 transition duration-300 hover:-translate-y-0.5 hover:border-signal/50 hover:bg-white/78 hover:shadow-[0_18px_55px_rgba(15,23,42,0.08)]"
                 >
                   <div className="absolute left-0 top-0 h-full w-1 origin-top scale-y-0 bg-signal transition duration-300 group-hover:scale-y-100" />
-                  <div className="flex items-start gap-4">
-                    <span className="mt-1 shrink-0 text-[11px] font-semibold tracking-[0.30em] text-signal">
+                  <div className="flex items-start gap-4 md:gap-5">
+                    <span className="mt-1 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-black/10 bg-white text-[11px] font-semibold tracking-[-0.03em] text-signal shadow-[0_10px_24px_rgba(15,23,42,0.05)]">
                       Q{String(index + 1).padStart(2, "0")}
                     </span>
 
-                    <div>
+                    <div className="min-w-0">
                       <h2 className="text-lg font-semibold leading-snug tracking-[-0.03em] text-[#111827] transition duration-300 group-hover:translate-x-1 group-hover:text-signal md:text-xl">
                         {item.question}
                       </h2>
@@ -402,30 +519,40 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <aside className="hero-reveal about-photo lg:sticky lg:top-28">
-            <div className="profile-card rounded-[28px] border border-black/10 bg-white/70 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.10)] backdrop-blur transition will-change-transform">
-              <div className="relative overflow-hidden rounded-[24px] border border-black/10 bg-white/70 p-3">
+          <aside className="hero-reveal about-photo hidden lg:sticky lg:top-24 lg:block">
+            <div className="profile-card relative overflow-hidden rounded-[34px] border border-black/10 bg-[#101820] p-4 text-white shadow-[0_28px_100px_rgba(15,23,42,0.20)] transition will-change-transform">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_15%,rgba(55,224,194,0.22),transparent_28%),linear-gradient(to_bottom,rgba(255,255,255,0.08),transparent_46%)]" />
+              <div className="pointer-events-none absolute inset-x-4 top-4 z-10 flex justify-between text-[10px] font-semibold uppercase tracking-[0.24em] text-white/58">
+                <span>REC 01</span>
+                <span>FRAME / PROFILE</span>
+              </div>
+
+              <div className="relative overflow-hidden rounded-[26px] border border-white/12 bg-white/10 p-3">
                 <img
                   src={profilePhoto}
                   alt="个人介绍照片"
-                  className="aspect-[4/5] w-full rounded-[18px] object-cover"
+                  className="aspect-[4/5] w-full rounded-[20px] object-cover grayscale-[12%]"
                 />
+                <div className="pointer-events-none absolute inset-x-6 bottom-6 flex items-center justify-between rounded-full border border-white/20 bg-black/28 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/76 backdrop-blur-md">
+                  <span>Photographer</span>
+                  <span>Editor</span>
+                </div>
               </div>
 
-              <div className="mt-5 border-t border-black/10 pt-5">
+              <div className="relative mt-5 border-t border-white/12 pt-5">
                 <p className="text-[11px] font-semibold tracking-[0.34em] text-signal">
                   ZHU XINGYU
                 </p>
 
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#111827]">
+                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">
                   朱星宇
                 </h2>
 
-                <p className="mt-2 text-base text-slate-600">
+                <p className="mt-2 text-base text-white/62">
                   摄影 / 剪辑 / 内容创作
                 </p>
 
-                <p className="mt-5 text-sm leading-7 text-slate-700">
+                <p className="mt-5 text-sm leading-7 text-white/68">
                   喜欢记录生活里的瞬间，也喜欢把音乐、画面和情绪剪到同一个节奏里。希望每一条视频都不只是完成，而是好看。
                 </p>
 
@@ -433,7 +560,7 @@ export default function AboutPage() {
                   {["热爱记录", "节奏剪辑", "生活感影像"].map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-black/10 bg-white/70 px-3 py-1.5 text-xs text-slate-700"
+                      className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/70"
                     >
                       {item}
                     </span>
@@ -441,11 +568,73 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
+
+            <div className="hero-reveal mt-4 rounded-[28px] border border-black/10 bg-white/60 p-4 shadow-[0_18px_60px_rgba(15,23,42,0.07)] backdrop-blur-xl">
+              <div className="mb-3 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                <span>Edit Timeline</span>
+                <span>00:18</span>
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {timelineFrames.map((frame, index) => (
+                  <div
+                    key={frame}
+                    className="frame-tile overflow-hidden rounded-[14px] border border-black/10 bg-black/5 p-1"
+                  >
+                    <img
+                      src={frame}
+                      alt={`创作帧 ${index + 1}`}
+                      className="aspect-[4/5] w-full rounded-[10px] object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                <div className="h-1 rounded-full bg-gradient-to-r from-signal to-signal/20" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+                  Cut
+                </span>
+                <div className="h-1 rounded-full bg-black/10" />
+              </div>
+            </div>
+
+            <div className="hero-reveal relative mt-4 overflow-hidden rounded-[28px] border border-black/10 bg-white/62 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.07)] backdrop-blur-xl">
+              <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-signal/10 blur-3xl" />
+
+              <div className="relative mb-5 flex items-end justify-between gap-4">
+                <div>
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                    Creative Direction
+                  </p>
+
+                  <h2 className="text-2xl font-semibold tracking-[-0.05em] text-[#111827]">
+                    我可以做什么？
+                  </h2>
+                </div>
+
+                <span className="text-4xl font-black tracking-[-0.08em] text-black/[0.04]">
+                  01
+                </span>
+              </div>
+
+              <div className="relative grid gap-2">
+                {services.map((item) => (
+                  <div
+                    key={item}
+                    className="group flex items-center gap-3 rounded-[18px] border border-black/10 bg-white/64 px-4 py-3 transition duration-300 hover:-translate-y-0.5 hover:border-signal/60 hover:bg-white"
+                  >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-signal transition duration-300 group-hover:scale-[1.8]" />
+                    <p className="text-sm font-semibold text-[#111827]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </aside>
         </section>
 
-        <div className="mt-24 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-          <section className="info-block group relative overflow-hidden rounded-[32px] border border-black/10 bg-white/62 p-7 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur transition duration-500 hover:-translate-y-1 hover:bg-white hover:shadow-[0_26px_90px_rgba(55,224,194,0.14)]">
+        <div className="mt-8">
+          <section className="info-block group relative overflow-hidden rounded-[30px] border border-black/10 bg-white/58 p-7 shadow-[0_20px_70px_rgba(15,23,42,0.07)] backdrop-blur-xl transition duration-500 hover:-translate-y-1 hover:bg-white/84 hover:shadow-[0_26px_90px_rgba(55,224,194,0.12)] lg:hidden">
             <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-signal/10 blur-3xl transition duration-500 group-hover:bg-signal/20" />
 
             <div className="mb-8 flex items-end justify-between gap-6">
@@ -468,7 +657,7 @@ export default function AboutPage() {
               {services.map((item) => (
                 <div
                   key={item}
-                  className="rounded-2xl border border-black/10 bg-white/65 px-4 py-4 transition duration-300 hover:-translate-y-1 hover:border-signal/60 hover:bg-white"
+                  className="rounded-[18px] border border-black/10 bg-white/64 px-4 py-4 transition duration-300 hover:-translate-y-1 hover:border-signal/60 hover:bg-white"
                 >
                   <div className="mb-3 h-1.5 w-1.5 rounded-full bg-signal transition duration-300 group-hover:scale-[1.8]" />
                   <p className="text-sm font-semibold text-[#111827]">
@@ -479,21 +668,21 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <section className="info-block group relative overflow-hidden rounded-[32px] border border-black/10 bg-white/62 p-7 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur transition duration-500 hover:-translate-y-1 hover:bg-white hover:shadow-[0_26px_90px_rgba(55,224,194,0.14)]">
+          <section className="info-block group relative overflow-hidden rounded-[30px] border border-black/10 bg-[#101820] p-7 text-white shadow-[0_20px_70px_rgba(15,23,42,0.11)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_rgba(15,23,42,0.18)]">
             <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-300/20 blur-3xl transition duration-500 group-hover:bg-signal/20" />
 
             <div className="mb-8 flex items-end justify-between gap-6">
               <div>
-                <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-slate-500">
+                <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-white/42">
                   常用工具
                 </p>
 
-                <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[#111827]">
+                <h2 className="text-3xl font-semibold tracking-[-0.05em] text-white">
                   我的创作工具箱
                 </h2>
               </div>
 
-              <span className="hidden text-5xl font-black tracking-[-0.08em] text-black/[0.04] md:block">
+              <span className="hidden text-5xl font-black tracking-[-0.08em] text-white/[0.08] md:block">
                 02
               </span>
             </div>
@@ -502,7 +691,7 @@ export default function AboutPage() {
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="rounded-full border border-black/10 bg-white/70 px-4 py-2.5 text-sm text-slate-700 transition duration-300 hover:-translate-y-1 hover:border-signal/60 hover:bg-signal hover:text-black hover:shadow-[0_12px_30px_rgba(55,224,194,0.24)]"
+                  className="rounded-full border border-white/12 bg-white/8 px-4 py-2.5 text-sm text-white/72 transition duration-300 hover:-translate-y-1 hover:border-signal/60 hover:bg-signal hover:text-black hover:shadow-[0_12px_30px_rgba(55,224,194,0.24)]"
                 >
                   {skill}
                 </span>
@@ -511,7 +700,7 @@ export default function AboutPage() {
           </section>
         </div>
 
-        <section className="info-block mt-6 rounded-[32px] border border-black/10 bg-white/62 p-7 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur">
+        <section className="info-block mt-5 rounded-[30px] border border-black/10 bg-white/58 p-7 shadow-[0_20px_70px_rgba(15,23,42,0.07)] backdrop-blur-xl">
           <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-slate-500">
