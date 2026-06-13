@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { withBasePath } from "@/lib/site-paths";
 import styles from "./about.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -60,7 +61,7 @@ const introPhotoNumbers = [
 ];
 
 const introPhotos = introPhotoNumbers.map((number) => ({
-  src: `/images/pic/${number}.jpg`,
+  src: withBasePath(`/images/pic/${number}.jpg`),
   alt: `入场照片 ${number}`,
 }));
 
@@ -79,7 +80,7 @@ const introMasonryClasses = [
   "object-left",
 ];
 
-const profilePhoto = "/images/pic/person.jpg";
+const profilePhoto = withBasePath("/images/pic/person.jpg");
 
 const studioSignals = [
   { label: "影像语气", value: "纪实 / 情绪 / 节奏" },
@@ -88,10 +89,10 @@ const studioSignals = [
 ];
 
 const timelineFrames = [
-  "/images/pic/03.jpg",
-  "/images/pic/08.jpg",
-  "/images/pic/14.jpg",
-  "/images/pic/21.jpg",
+  withBasePath("/images/pic/03.jpg"),
+  withBasePath("/images/pic/08.jpg"),
+  withBasePath("/images/pic/14.jpg"),
+  withBasePath("/images/pic/21.jpg"),
 ];
 
 const qaItems = [

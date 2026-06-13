@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/site-paths";
+
 export function FloatingContact() {
   return (
     <div className="group fixed bottom-6 right-6 z-[9990] h-20 w-20">
@@ -6,7 +8,7 @@ export function FloatingContact() {
         className="absolute bottom-0 right-0 flex h-16 w-16 items-center justify-center border border-white/30 bg-white/10 text-white backdrop-blur-xl transition-all duration-500 ease-out group-hover:translate-y-3 group-hover:scale-75 group-hover:opacity-0 group-hover:blur-sm"
       >
         <img
-          src="/images/WeChat_logo.png"
+          src={withBasePath("/images/WeChat_logo.png")}
           alt="微信"
           className="h-7 w-7 object-contain"
         />
@@ -15,7 +17,7 @@ export function FloatingContact() {
       <div className="pointer-events-none absolute bottom-0 right-0 w-72 origin-bottom-right translate-y-6 scale-75 rounded-2xl border border-white/30 bg-[#071017]/90 p-6 text-center opacity-0 blur-md shadow-[0_0_60px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-500 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:blur-0">
         <div className="mx-auto mb-5 flex h-40 w-40 items-center justify-center bg-white p-2">
           <img
-            src="/images/wechat.png"
+            src={withBasePath("/images/wechat.png")}
             alt="微信联系二维码"
             className="h-full w-full object-contain"
           />
