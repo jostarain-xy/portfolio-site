@@ -7,20 +7,20 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -37,18 +37,21 @@ jobs:
           GITHUB_PAGES: "true"
           NEXT_PUBLIC_BASE_PATH: /portfolio-site
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
+      - name: Publish gh-pages branch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          export GIT_INDEX_FILE="$(mktemp)"
+          git --work-tree=out add -A
+          tree="$(git write-tree)"
+          parent="$(git rev-parse --verify origin/gh-pages 2>/dev/null || true)"
+
+          if [ -n "$parent" ]; then
+            commit="$(git commit-tree "$tree" -p "$parent" -m "Deploy static site")"
+          else
+            commit="$(git commit-tree "$tree" -m "Deploy static site")"
+          fi
+
+          git push origin "$commit:refs/heads/gh-pages"
