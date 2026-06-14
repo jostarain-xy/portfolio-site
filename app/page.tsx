@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { withBasePath } from "@/lib/site-paths";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,7 @@ const featuredWork = [
     description:
       "为邵阳市自来水宝润二次供水有限责任公司拍摄制作企业宣传片，负责整体拍摄执行与影像呈现。",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/BaoRunvideo%20videos.mp4",
+    posterSrc: withBasePath("/images/pic/03.jpg"),
   },
   {
     title: "喜哥视界人物访谈：高志凯专题对谈",
@@ -23,6 +25,7 @@ const featuredWork = [
     description:
       "参与喜哥视界访谈， 策划并完成高志凯先生人物深度访谈全流程内容创作",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/gaozhikai.mp4",
+    posterSrc: withBasePath("/images/pic/17.jpg"),
   },
   {
     title: "那曾一闪而过的夏天",
@@ -31,6 +34,7 @@ const featuredWork = [
     description:
       "既然注定要分别，那就把快门定格在这个夏天",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/%E6%88%91%E4%BB%AC%E4%B8%8D%E4%BC%9A%E6%98%8E%E7%99%BD%E9%82%A3%E6%9B%BE%E6%98%AF%E4%B8%80%E9%97%AA%E8%80%8C%E8%BF%87%E7%9A%84%E5%A4%8F%E5%A4%A9.mp4",
+    posterSrc: withBasePath("/images/pic/08.jpg"),
   },
 ];
 
@@ -175,6 +179,8 @@ export default function Home() {
   muted
   loop
   playsInline
+  preload="metadata"
+  poster={withBasePath("/images/pic/08.jpg")}
   className="hero-bg-video pointer-events-none absolute inset-0 h-full w-full object-cover opacity-70 saturate-[0.9] contrast-[0.95]"
 />
 
@@ -272,6 +278,8 @@ export default function Home() {
                   <video
                     src={work.videoSrc}
                     controls
+                    preload="none"
+                    poster={work.posterSrc}
                     className="aspect-video h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
                   />
                 </div>

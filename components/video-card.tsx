@@ -16,6 +16,7 @@ export function VideoCard({ src }: VideoCardProps) {
           muted
           loop
           playsInline
+          preload="none"
           className="pointer-events-none absolute -inset-16 z-0 h-[calc(100%+8rem)] w-[calc(100%+8rem)] scale-110 object-cover opacity-20 blur-2xl"
         />
       )}
@@ -30,6 +31,7 @@ export function VideoCard({ src }: VideoCardProps) {
               muted
               loop
               playsInline
+              preload="metadata"
               className="h-full w-full object-cover"
             />
           ) : (

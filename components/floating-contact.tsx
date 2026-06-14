@@ -10,6 +10,7 @@ export function FloatingContact() {
         <img
           src={withBasePath("/images/WeChat_logo.png")}
           alt="微信"
+          decoding="async"
           className="h-7 w-7 object-contain"
         />
       </button>
@@ -19,6 +20,8 @@ export function FloatingContact() {
           <img
             src={withBasePath("/images/wechat.png")}
             alt="微信联系二维码"
+            loading="lazy"
+            decoding="async"
             className="h-full w-full object-contain"
           />
         </div>

@@ -61,9 +61,12 @@ const introPhotoNumbers = [
   "29",
 ];
 
+const deferredIntroPhotoNumbers = new Set(["23", "24", "25", "26", "27", "28", "29"]);
+
 const introPhotos = introPhotoNumbers.map((number) => ({
   src: withBasePath(`/images/pic/${number}.jpg`),
   alt: `入场照片 ${number}`,
+  defer: deferredIntroPhotoNumbers.has(number),
 }));
 
 const introMasonryClasses = [
@@ -331,6 +334,9 @@ export default function AboutPage() {
               <img
                 src={photo.src}
                 alt={photo.alt}
+                loading={photo.defer ? "lazy" : "eager"}
+                fetchPriority={photo.defer ? "low" : "auto"}
+                decoding="async"
                 className={`h-full w-full object-cover ${introMasonryClasses[index % introMasonryClasses.length]}`}
                 draggable={false}
               />
@@ -470,6 +476,8 @@ export default function AboutPage() {
                   <img
                     src={profilePhoto}
                     alt="个人介绍照片"
+                    loading="lazy"
+                    decoding="async"
                     className="aspect-[4/5] h-full w-full rounded-[18px] object-cover"
                   />
                   <div className="flex min-w-0 flex-col justify-between py-1">
@@ -490,6 +498,8 @@ export default function AboutPage() {
                           key={frame}
                           src={frame}
                           alt={`创作帧 ${index + 1}`}
+                          loading="lazy"
+                          decoding="async"
                           className="frame-tile aspect-square rounded-[10px] object-cover"
                         />
                       ))}
@@ -534,6 +544,8 @@ export default function AboutPage() {
                 <img
                   src={profilePhoto}
                   alt="个人介绍照片"
+                  loading="lazy"
+                  decoding="async"
                   className="aspect-[4/5] w-full rounded-[20px] object-cover grayscale-[12%]"
                 />
                 <div className="pointer-events-none absolute inset-3 rounded-[20px] ring-1 ring-white/10" />
@@ -555,6 +567,8 @@ export default function AboutPage() {
                     <img
                       src={frame}
                       alt={`创作帧 ${index + 1}`}
+                      loading="lazy"
+                      decoding="async"
                       className="aspect-[4/5] w-full rounded-[10px] object-cover"
                     />
                   </div>
@@ -671,7 +685,7 @@ export default function AboutPage() {
                   }
                 >
                   <span className={styles.toolLogo} aria-hidden="true">
-                    <img src={skill.src} alt="" />
+                    <img src={skill.src} alt="" loading="lazy" decoding="async" />
                   </span>
                   <span className={styles.toolName}>{skill.name}</span>
                 </div>

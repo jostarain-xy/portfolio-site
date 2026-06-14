@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
+import { withBasePath } from "@/lib/site-paths";
 
 type Work = {
   title: string;
@@ -10,6 +11,7 @@ type Work = {
   role: string;
   description: string;
   videoSrc: string;
+  posterSrc: string;
   rotate: number;
 };
 
@@ -24,6 +26,7 @@ const works: Work[] = [
       "遇见彼此是六十亿分之一的幸运，而双向奔赴的星光，才是真正能穿越时空的永恒。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/lucky-wedding.mp4",
+    posterSrc: withBasePath("/images/pic/24.jpg"),
     rotate: -3,
   },
   {
@@ -34,6 +37,7 @@ const works: Work[] = [
       "相识相遇相知，一切或许都是命运的安排，而和你在一起的时光，也全都很耀眼。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/forever.mp4",
+    posterSrc: withBasePath("/images/pic/25.jpg"),
     rotate: 2,
   },
   {
@@ -43,6 +47,7 @@ const works: Work[] = [
     description: "既然注定要分别，那就把快门定格在这个夏天。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/bali.mp4",
+    posterSrc: withBasePath("/images/pic/08.jpg"),
     rotate: -1,
   },
   {
@@ -53,6 +58,7 @@ const works: Work[] = [
       "为邵阳市自来水宝润二次供水有限责任公司拍摄制作企业宣传片，完成企业形象影像呈现。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/BaoRunvideo%20videos.mp4",
+    posterSrc: withBasePath("/images/pic/03.jpg"),
     rotate: 3,
   },
   {
@@ -62,6 +68,7 @@ const works: Work[] = [
     description: "围绕长对谈内容进行结构整理、节奏剪辑和信息强化。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/gaozhikai.mp4",
+    posterSrc: withBasePath("/images/pic/17.jpg"),
     rotate: -2,
   },
   {
@@ -72,6 +79,7 @@ const works: Work[] = [
       "喧嚷着蝉鸣、黏人的汗水、冰镇的饮料、发呆的下午，刚在梦里想起的谁，是想起哪样一个夏天。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/The%20Summer.mp4",
+    posterSrc: withBasePath("/images/pic/20.jpg"),
     rotate: 2.5,
   },
   {
@@ -82,6 +90,7 @@ const works: Work[] = [
       "参与制作纪录片毕业设计，负责分镜设计与部分镜头拍摄制作。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/kuaizhi.mp4",
+    posterSrc: withBasePath("/images/pic/19.jpg"),
     rotate: -3,
   },
   {
@@ -92,6 +101,7 @@ const works: Work[] = [
       "在 UE5 中完成视频场景以及摄像机镜头制作，并完成剪辑成片。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/jingguan.mp4",
+    posterSrc: withBasePath("/images/pic/23.jpg"),
     rotate: 2,
   },
   {
@@ -102,6 +112,7 @@ const works: Work[] = [
       "为本地茶文化品牌制作商业宣传片，主要负责导演及后期剪辑。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/yunwu%20tea.mp4",
+    posterSrc: withBasePath("/images/pic/01.jpg"),
     rotate: -1.5,
   },
 ];
@@ -1153,7 +1164,8 @@ export default function PortfolioPage() {
                     src={work.videoSrc}
                     muted
                     playsInline
-                    preload="metadata"
+                    preload="none"
+                    poster={work.posterSrc}
                     className="aspect-video w-full object-cover opacity-90 transition duration-700 group-hover:scale-[1.025] group-hover:opacity-100"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
@@ -1192,6 +1204,8 @@ export default function PortfolioPage() {
                     autoPlay
                     muted
                     playsInline
+                    preload="metadata"
+                    poster={activeWork.posterSrc}
                     className="aspect-video max-h-[62vh] w-full bg-black object-contain"
                   />
                 </div>
