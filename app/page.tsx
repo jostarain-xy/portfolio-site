@@ -21,15 +21,15 @@ const featuredWork = [
     category: "Interview",
     role: "策划 / 摄影 / 后期剪辑 / 字幕包装",
     description:
-      "参与喜哥视界访谈类内容制作，围绕长对谈内容进行结构整理、节奏剪辑和信息强化。",
+      "参与喜哥视界访谈， 策划并完成高志凯先生人物深度访谈全流程内容创作",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/gaozhikai.mp4",
   },
   {
-    title: "我们不会明白那曾是一闪而过的夏天",
+    title: "那曾一闪而过的夏天",
     category: "Creator Short",
     role: "摄影 / 剪辑 / 音乐节奏 / 情绪表达",
     description:
-      "以日常影像和情绪片段为基础，通过镜头顺序、音乐节奏和画面停顿建立氛围。",
+      "既然注定要分别，那就把快门定格在这个夏天",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/%E6%88%91%E4%BB%AC%E4%B8%8D%E4%BC%9A%E6%98%8E%E7%99%BD%E9%82%A3%E6%9B%BE%E6%98%AF%E4%B8%80%E9%97%AA%E8%80%8C%E8%BF%87%E7%9A%84%E5%A4%8F%E5%A4%A9.mp4",
   },
 ];
@@ -182,6 +182,7 @@ export default function Home() {
 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#efe7da]/88 via-[#efe7da]/20 to-[#efe7da]/45" />
 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(55,224,194,0.16),transparent_28%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:40px_40px]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-44 bg-gradient-to-b from-transparent via-[#f4f1ea]/76 to-[#f7f3ec]" />
 
         <div className="relative z-10 mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl grid-cols-1 items-end gap-12 px-6 pb-20 pt-32 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="max-w-5xl space-y-8">
@@ -229,7 +230,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="projects-section relative overflow-hidden border-t border-black/10 bg-[#f7f3ec]">
+      <section className="projects-section relative -mt-16 overflow-hidden bg-[#f7f3ec] pt-16">
       <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.22)_1px,transparent_1px)] [background-size:120px_120px]" />
 
 <div className="pointer-events-none absolute left-[-12%] top-[10%] h-[520px] w-[520px] rounded-full bg-signal/10 blur-[160px]" />

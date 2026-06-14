@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { type CSSProperties, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { withBasePath } from "@/lib/site-paths";
@@ -9,21 +9,22 @@ import styles from "./about.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const skills = [
-  "Premiere Pro",
-  "After Effects",
-  "DaVinci Resolve",
-  "Blender",
-  "ZBrush",
-  "ChatGPT",
-  "Codex",
-  "Jimeng AI",
-  "Kling",
+  { name: "Premiere Pro", src: withBasePath("/images/软件logo/Premiere Pro.png"), color: "#9999ff" },
+  { name: "After Effects", src: withBasePath("/images/软件logo/After Effects.png"), color: "#d8a6ff" },
+  { name: "DaVinci Resolve", src: withBasePath("/images/软件logo/DaVinc.png"), color: "#9ce8ff" },
+  { name: "剪映", src: withBasePath("/images/软件logo/剪映.png"), color: "#54f3ff" },
+  { name: "Blender", src: withBasePath("/images/软件logo/blender.jpg"), color: "#ff9a2e" },
+  { name: "ZBrush", src: withBasePath("/images/软件logo/ZBrush.jpg"), color: "#f2f2f2" },
+  { name: "ChatGPT", src: withBasePath("/images/软件logo/chatgpt.png"), color: "#7de5c3" },
+  { name: "Codex", src: withBasePath("/images/软件logo/codex.png"), color: "#37e0c2" },
+  { name: "Jimeng AI", src: withBasePath("/images/软件logo/即梦.jpg"), color: "#ffc7e8" },
+  { name: "Kling", src: withBasePath("/images/软件logo/可灵.png"), color: "#8fe7ff" },
 ];
 
 const services = [
   "人物访谈剪辑",
   "宣传片制作",
-  "婚拍 Vlog",
+  "婚拍影像",
   "短视频包装",
   "纪实影像",
   "内容结构整理",
@@ -99,7 +100,7 @@ const qaItems = [
   {
     question: "稍微做个自我介绍吧？",
     answer:
-      "Halo！我叫朱星宇，也可以叫我阿星。平时喜欢拍生活里的瞬间，也喜欢把音乐、画面和情绪剪到同一个节奏里。",
+      "你好！我叫朱星宇，也可以叫我阿星。平时喜欢拍生活里的瞬间，也喜欢把音乐、画面和情绪剪到同一个节奏里。",
   },
   {
     question: "什么时候开始接触摄影，为什么喜欢影像？",
@@ -119,12 +120,12 @@ const qaItems = [
   {
     question: "擅长什么类型的内容？",
     answer:
-      "人物访谈、企业宣传片、婚拍 Vlog、纪实短视频和创作者内容剪辑。比起只是完成需求，我更希望把内容做得有观看体验。",
+      "人物访谈、企业宣传片、婚拍影像、纪实短视频和创作者内容剪辑。比起只是完成需求，我更希望把内容做得有观看体验。",
   },
   {
     question: "常用哪些工具？",
     answer:
-      "常用 Premiere Pro、After Effects、DaVinci Resolve，也会使用 Blender、ZBrush，并结合 ChatGPT、Codex、Jimeng AI、Kling 等工具辅助创作。",
+      "剪辑上常用 Premiere Pro、After Effects、DaVinci Resolve 和剪映，能完成节奏剪辑、包装和基础调色；创作中会结合 ChatGPT、Codex、Jimeng AI、Kling 等 AI 工具提升策划、文案、视觉生成和效率，也具备一定网页搭建与前端实现能力，这个作品集网站就是我自己搭建完成的。",
   },
 ];
 
@@ -343,26 +344,26 @@ export default function AboutPage() {
         <div className={`nrly-center-card absolute left-1/2 top-1/2 z-20 flex w-[min(78vw,300px)] -translate-x-1/2 -translate-y-1/2 flex-col justify-between bg-[#b7ddff]/92 px-7 py-8 shadow-[0_20px_80px_rgba(21,78,125,0.24)] backdrop-blur-sm md:min-h-[360px] md:w-[min(24vw,360px)] ${styles.centerCard}`}>
           <div>
             <p className="mb-7 text-[10px] font-semibold uppercase tracking-[0.24em] text-black/50">
-              ABOUT / INTRO
+              个人介绍
             </p>
             <h2 className="font-serif text-[clamp(48px,8vw,88px)] font-normal italic leading-[0.78] tracking-[-0.06em] text-[#17334e]">
-              Zhu
-              <span className="block not-italic">Xingyu</span>
+              朱
+              <span className="block not-italic">星宇</span>
             </h2>
           </div>
 
           <div className="mt-8">
             <p className="max-w-[210px] text-[10px] font-semibold uppercase leading-[1.08] tracking-[-0.04em] text-[#10243a]/75">
-              Photographer / editor / content creator.
+              摄影 / 剪辑 / 内容创作
             </p>
             <p className="mt-5 text-[11px] font-semibold uppercase tracking-[-0.03em] text-[#10243a]/85">
-              Profile -&gt;
+              查看资料 -&gt;
             </p>
           </div>
         </div>
 
         <div className="absolute bottom-5 left-1/2 z-20 hidden -translate-x-1/2 gap-3 md:flex">
-          {["PHOTO", "CUT", "STORY", "LIFE"].map((item, index) => (
+          {["摄影", "剪辑", "故事", "生活"].map((item, index) => (
             <span
               key={item}
               className={`nrly-pill rounded-full bg-white/86 px-5 py-3 text-xs font-semibold tracking-[-0.04em] text-[#10243a]/68 shadow-[0_12px_30px_rgba(21,78,125,0.14)] ${styles.pill}`}
@@ -389,7 +390,7 @@ export default function AboutPage() {
             <div className="hero-reveal mb-5 flex items-start justify-between border-b border-black/10 pb-4 md:mb-8 md:pb-6">
               <div>
                 <p className="text-[11px] font-semibold tracking-[0.34em] text-signal">
-                  ABOUT / Q&A
+                  ABOUT / 问答
                 </p>
 
                 <div className="mt-4 leading-none text-[#111827]">
@@ -400,43 +401,48 @@ export default function AboutPage() {
               </div>
 
               <p className="hidden text-[11px] font-semibold tracking-[0.34em] text-slate-400 md:block">
-                PERSONAL INTRO
+                个人介绍
               </p>
             </div>
 
             <div className="qa-intro">
               <div className="hero-reveal relative max-w-4xl border-y border-black/10 py-4 md:py-5">
                 <div className="mb-3 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-400">
-                  <span>Personal Statement</span>
+                  <span>个人介绍</span>
                   <span className="h-px flex-1 bg-black/10" />
                   <span className="text-signal">01</span>
                 </div>
 
-                <h1
-                  className="relative text-[30px] font-semibold leading-[1.12] tracking-[-0.045em] text-[#111827] md:text-[clamp(38px,4.8vw,58px)]"
-                  style={{
-                    fontFamily:
-                      '"STSong", "Songti SC", "Noto Serif SC", "Source Han Serif SC", serif',
-                  }}
-                >
-                  <span className="absolute -left-1 top-0 text-[0.72em] text-signal/70">
-                    “
-                  </span>
-                  <span className="relative ml-5 inline-block">
-                    音乐是我的
-                    <span className="mx-2 inline-block border-b border-signal/50 px-1 italic text-transparent [-webkit-text-stroke:0.9px_currentColor]">
-                      输氧管
-                    </span>
-                  </span>
-                  <br />
-                  <span className="relative ml-5 inline-block">
-                    摄影是我的
-                    <span className="mx-2 inline-block bg-[#101820] px-3 py-0.5 text-white shadow-[0_12px_34px_rgba(15,23,42,0.13)]">
-                      呼吸机
-                    </span>
-                  </span>
-                  <span className="text-[0.72em] text-signal/70">”</span>
-                </h1>
+                <div className={styles.statementCard}>
+                  <div className={styles.statementBody}>
+                    <div className={styles.waveBars} aria-hidden="true">
+                      {[42, 68, 34, 86, 52, 74, 44, 92, 58, 76].map(
+                        (height, index) => (
+                          <span
+                            key={`${height}-${index}`}
+                            style={
+                              {
+                                "--bar-height": `${height}%`,
+                                "--bar-delay": `${index * 0.08}s`,
+                            } as CSSProperties
+                            }
+                          />
+                        ),
+                      )}
+                    </div>
+
+                    <h1 className={styles.statementTitle}>
+                      <span className={styles.statementLine}>
+                        音乐是我的
+                        <span className={styles.outlineWord}>输氧管</span>
+                      </span>
+                      <span className={styles.statementLine}>
+                        摄影是我的
+                        <span className={styles.solidWord}>呼吸机</span>
+                      </span>
+                    </h1>
+                  </div>
+                </div>
               </div>
 
               <p className="hero-reveal mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:mt-6 md:text-base md:leading-8">
@@ -469,7 +475,7 @@ export default function AboutPage() {
                   <div className="flex min-w-0 flex-col justify-between py-1">
                     <div>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-signal">
-                        ZHU XINGYU
+                        Zhu Xing Yu
                       </p>
                       <p className="mt-2 text-xl font-semibold tracking-[-0.05em]">
                         摄影 / 剪辑
@@ -521,12 +527,8 @@ export default function AboutPage() {
           </div>
 
           <aside className="hero-reveal about-photo hidden lg:sticky lg:top-24 lg:block">
-            <div className="profile-card relative overflow-hidden rounded-[34px] border border-black/10 bg-[#101820] p-4 text-white shadow-[0_28px_100px_rgba(15,23,42,0.20)] transition will-change-transform">
+            <div className="profile-card relative overflow-hidden rounded-[34px] border border-black/10 bg-[#101820] p-4 shadow-[0_28px_100px_rgba(15,23,42,0.20)] transition will-change-transform">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_15%,rgba(55,224,194,0.22),transparent_28%),linear-gradient(to_bottom,rgba(255,255,255,0.08),transparent_46%)]" />
-              <div className="pointer-events-none absolute inset-x-4 top-4 z-10 flex justify-between text-[10px] font-semibold uppercase tracking-[0.24em] text-white/58">
-                <span>REC 01</span>
-                <span>FRAME / PROFILE</span>
-              </div>
 
               <div className="relative overflow-hidden rounded-[26px] border border-white/12 bg-white/10 p-3">
                 <img
@@ -534,52 +536,21 @@ export default function AboutPage() {
                   alt="个人介绍照片"
                   className="aspect-[4/5] w-full rounded-[20px] object-cover grayscale-[12%]"
                 />
-                <div className="pointer-events-none absolute inset-x-6 bottom-6 flex items-center justify-between rounded-full border border-white/20 bg-black/28 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/76 backdrop-blur-md">
-                  <span>Photographer</span>
-                  <span>Editor</span>
-                </div>
-              </div>
-
-              <div className="relative mt-5 border-t border-white/12 pt-5">
-                <p className="text-[11px] font-semibold tracking-[0.34em] text-signal">
-                  ZHU XINGYU
-                </p>
-
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">
-                  朱星宇
-                </h2>
-
-                <p className="mt-2 text-base text-white/62">
-                  摄影 / 剪辑 / 内容创作
-                </p>
-
-                <p className="mt-5 text-sm leading-7 text-white/68">
-                  喜欢记录生活里的瞬间，也喜欢把音乐、画面和情绪剪到同一个节奏里。希望每一条视频都不只是完成，而是好看。
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {["热爱记录", "节奏剪辑", "生活感影像"].map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/70"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+                <div className="pointer-events-none absolute inset-3 rounded-[20px] ring-1 ring-white/10" />
+                <div className="pointer-events-none absolute inset-x-3 bottom-3 h-24 rounded-b-[20px] bg-gradient-to-t from-black/38 to-transparent" />
               </div>
             </div>
 
             <div className="hero-reveal mt-4 rounded-[28px] border border-black/10 bg-white/60 p-4 shadow-[0_18px_60px_rgba(15,23,42,0.07)] backdrop-blur-xl">
               <div className="mb-3 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
-                <span>Edit Timeline</span>
+                <span>Timeline</span>
                 <span>00:18</span>
               </div>
               <div className="grid grid-cols-4 gap-2">
                 {timelineFrames.map((frame, index) => (
                   <div
                     key={frame}
-                    className="frame-tile overflow-hidden rounded-[14px] border border-black/10 bg-black/5 p-1"
+                    className={`frame-tile ${styles.timelineFrame} overflow-hidden rounded-[14px] border border-black/10 bg-black/5 p-1`}
                   >
                     <img
                       src={frame}
@@ -592,7 +563,7 @@ export default function AboutPage() {
               <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
                 <div className="h-1 rounded-full bg-gradient-to-r from-signal to-signal/20" />
                 <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  Cut
+                  剪辑
                 </span>
                 <div className="h-1 rounded-full bg-black/10" />
               </div>
@@ -604,7 +575,7 @@ export default function AboutPage() {
               <div className="relative mb-5 flex items-end justify-between gap-4">
                 <div>
                   <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
-                    Creative Direction
+                    创作方向
                   </p>
 
                   <h2 className="text-2xl font-semibold tracking-[-0.05em] text-[#111827]">
@@ -688,14 +659,22 @@ export default function AboutPage() {
               </span>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className={styles.toolGrid}>
               {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full border border-white/12 bg-white/8 px-4 py-2.5 text-sm text-white/72 transition duration-300 hover:-translate-y-1 hover:border-signal/60 hover:bg-signal hover:text-black hover:shadow-[0_12px_30px_rgba(55,224,194,0.24)]"
+                <div
+                  key={skill.name}
+                  className={styles.toolIconCard}
+                  style={
+                    {
+                      "--tool-color": skill.color,
+                    } as CSSProperties
+                  }
                 >
-                  {skill}
-                </span>
+                  <span className={styles.toolLogo} aria-hidden="true">
+                    <img src={skill.src} alt="" />
+                  </span>
+                  <span className={styles.toolName}>{skill.name}</span>
+                </div>
               ))}
             </div>
           </section>
@@ -734,7 +713,7 @@ export default function AboutPage() {
                   <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-start">
                     <div>
                       <p className="mb-2 text-xs font-semibold tracking-[0.26em] text-signal">
-                        0{index + 1} / EXPERIENCE
+                        0{index + 1} / {index === 0 ? "工作经历" : "实习经历"}
                       </p>
 
                       <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#111827]">

@@ -111,6 +111,379 @@
   transform: translateY(0);
 }
 
+.statementCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 30px;
+  padding: clamp(22px, 3.2vw, 34px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(222, 252, 248, 0.5)),
+    radial-gradient(circle at 18% 10%, rgba(55, 224, 194, 0.2), transparent 30%),
+    radial-gradient(circle at 86% 72%, rgba(17, 24, 39, 0.12), transparent 38%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 24px 70px rgba(15, 23, 42, 0.08);
+}
+
+.statementCard::before,
+.statementCard::after {
+  position: absolute;
+  z-index: -1;
+  width: 82px;
+  height: 82px;
+  content: "";
+  border-color: rgba(55, 224, 194, 0.64);
+  border-style: solid;
+}
+
+.statementCard::before {
+  top: 14px;
+  left: 14px;
+  border-width: 1px 0 0 1px;
+  border-radius: 18px 0 0;
+}
+
+.statementCard::after {
+  right: 14px;
+  bottom: 14px;
+  border-width: 0 1px 1px 0;
+  border-radius: 0 0 18px;
+}
+
+.statementMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  color: rgba(100, 116, 139, 0.84);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.statementMeta span:last-child {
+  color: rgba(55, 224, 194, 0.95);
+}
+
+.statementBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  gap: clamp(16px, 2.4vw, 28px);
+  align-items: center;
+}
+
+.waveBars {
+  display: flex;
+  order: 2;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 112px;
+  min-height: 112px;
+  padding: 18px 12px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(55, 224, 194, 0.16), transparent 44%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.84)),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 13px,
+      rgba(255, 255, 255, 0.08) 14px
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 18px 44px rgba(15, 23, 42, 0.13);
+}
+
+.waveBars span {
+  width: 4px;
+  height: var(--bar-height);
+  max-height: 62px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #d6fff8, #37e0c2 52%, #7aa7ff);
+  box-shadow: 0 0 16px rgba(55, 224, 194, 0.34);
+  transform-origin: center;
+  animation: pulseBar 1.7s ease-in-out var(--bar-delay) infinite;
+}
+
+.statementTitle {
+  position: relative;
+  order: 1;
+  margin: 0;
+  padding: 0 0 0 30px;
+  color: #111827;
+  font-family:
+    "PingFang SC",
+    "Microsoft YaHei",
+    "Noto Sans SC",
+    "Source Han Sans SC",
+    Arial,
+    sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.04;
+  text-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.statementLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.16em;
+  padding-left: 0;
+}
+
+.statementLine + .statementLine {
+  margin-top: 12px;
+}
+
+.quoteMark,
+.endQuote {
+  color: rgba(55, 224, 194, 0.8);
+  font-size: 0.76em;
+  line-height: 0;
+}
+
+.quoteMark {
+  position: absolute;
+  top: -0.06em;
+  left: 0;
+  font-family:
+    "STSong",
+    "Songti SC",
+    serif;
+}
+
+.endQuote {
+  position: absolute;
+  bottom: -0.08em;
+  left: 0;
+  font-family:
+    "STSong",
+    "Songti SC",
+    serif;
+}
+
+.outlineWord,
+.solidWord {
+  display: inline-block;
+  margin-left: 0;
+  font: inherit;
+  letter-spacing: -0.085em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.outlineWord {
+  position: relative;
+  padding: 0 0.08em 0.08em;
+  color: #10243a;
+  background: linear-gradient(to top, rgba(55, 224, 194, 0.24) 0.28em, transparent 0.28em);
+  border: 0;
+  box-shadow: none;
+  transform: none;
+  transform-origin: left bottom;
+}
+
+.outlineWord::before {
+  display: none;
+}
+
+.solidWord {
+  position: relative;
+  padding: 0.04em 0.18em 0.12em 0.22em;
+  color: white;
+  background:
+    linear-gradient(135deg, rgba(55, 224, 194, 0.16), transparent 45%),
+    #101820;
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transform: translateY(0.02em);
+}
+
+.solidWord::after {
+  position: absolute;
+  right: -16px;
+  bottom: 0.18em;
+  width: 10px;
+  height: 10px;
+  content: "";
+  border-radius: 999px;
+  background: #37e0c2;
+  box-shadow: 0 0 18px rgba(55, 224, 194, 0.86);
+}
+
+.toolGrid {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px 14px;
+  padding: 22px 18px 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 84% 18%, rgba(55, 224, 194, 0.16), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(22px);
+}
+
+.toolIconCard {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: 0;
+  min-height: 96px;
+  padding: 2px 3px 0;
+  border: 0;
+  border-radius: 22px;
+  color: rgba(255, 255, 255, 0.76);
+  background: transparent;
+  transition:
+    box-shadow 0.28s ease,
+    transform 0.28s ease;
+}
+
+.toolIconCard:hover {
+  box-shadow: 0 18px 38px color-mix(in srgb, var(--tool-color) 11%, transparent);
+  transform: translateY(-5px);
+}
+
+.toolLogo {
+  display: grid;
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  place-items: center;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--tool-color) 24%, white 18%);
+  border-radius: 18px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.035) 42%, rgba(0, 0, 0, 0.1)),
+    color-mix(in srgb, var(--tool-color) 18%, rgba(255, 255, 255, 0.08));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -10px 22px rgba(0, 0, 0, 0.16),
+    0 12px 24px rgba(0, 0, 0, 0.22),
+    0 0 28px color-mix(in srgb, var(--tool-color) 15%, transparent);
+  transition:
+    box-shadow 0.28s ease,
+    transform 0.28s ease;
+}
+
+.toolIconCard:hover .toolLogo {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -10px 22px rgba(0, 0, 0, 0.14),
+    0 16px 30px rgba(0, 0, 0, 0.26),
+    0 0 34px color-mix(in srgb, var(--tool-color) 24%, transparent);
+  transform: scale(1.06);
+}
+
+.toolLogo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 17px;
+  object-fit: contain;
+}
+
+.toolName {
+  min-width: 0;
+  max-width: 100%;
+  color: rgba(241, 245, 249, 0.82);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.34);
+  transition: color 0.28s ease;
+}
+
+.toolIconCard:hover .toolName {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.timelineFrame {
+  position: relative;
+  isolation: isolate;
+  cursor: pointer;
+  transform-origin: center bottom;
+  transition:
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    transform 0.28s ease;
+}
+
+.timelineFrame::after {
+  position: absolute;
+  inset: 1px;
+  z-index: 1;
+  content: "";
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.28), transparent 42%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.timelineFrame img {
+  transition:
+    filter 0.28s ease,
+    transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timelineFrame:hover {
+  border-color: rgba(55, 224, 194, 0.54);
+  box-shadow:
+    0 14px 30px rgba(15, 23, 42, 0.13),
+    0 0 0 1px rgba(55, 224, 194, 0.14);
+  transform: translateY(-5px) scale(1.025);
+}
+
+.timelineFrame:hover::after {
+  opacity: 1;
+}
+
+.timelineFrame:hover img {
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.08);
+}
+
+.timelineFrame:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+@keyframes pulseBar {
+  0%,
+  100% {
+    transform: scaleY(0.72);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .introLoader {
     display: none;
@@ -121,10 +494,114 @@
   .photo,
   .centerCard,
   .pill,
-  .cover {
+  .cover,
+  .waveBars span,
+  .timelineFrame,
+  .timelineFrame img {
     opacity: 1;
     filter: none;
     transform: none;
     animation: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .statementCard {
+    border-radius: 22px;
+    padding: 14px;
+  }
+
+  .statementMeta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 14px;
+    letter-spacing: 0.2em;
+  }
+
+  .statementBody {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .waveBars {
+    order: -1;
+    min-height: 54px;
+  }
+
+  .waveBars span {
+    max-height: 34px;
+  }
+
+  .statementTitle {
+    padding-left: 18px;
+    font-size: 34px;
+    line-height: 1.12;
+  }
+
+  .statementLine {
+    gap: 0.12em;
+    padding-left: 0;
+  }
+
+  .outlineWord,
+  .solidWord {
+    margin-top: 0;
+  }
+
+  .toolGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px 6px;
+    padding: 18px 10px 16px;
+    border-radius: 28px;
+  }
+
+  .toolIconCard {
+    min-height: 82px;
+    padding: 0;
+  }
+
+  .toolLogo {
+    flex-basis: 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+  }
+
+  .toolLogo img {
+    border-radius: 15px;
+  }
+
+  .toolName {
+    font-size: 9px;
+    line-height: 1.15;
+  }
+}
+
+@media (max-width: 430px) {
+  .toolGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 14px;
+    padding: 20px 18px;
+  }
+
+  .toolIconCard {
+    min-height: 90px;
+  }
+
+  .toolLogo {
+    flex-basis: 56px;
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+  }
+
+  .toolLogo img {
+    border-radius: 16px;
+  }
+
+  .toolName {
+    font-size: 11px;
   }
 }

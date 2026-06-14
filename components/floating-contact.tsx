@@ -23,7 +23,7 @@ export function FloatingContact() {
           />
         </div>
 
-        <h3 className="text-2xl font-semibold text-white">WeChat</h3>
+        <h3 className="text-2xl font-semibold text-white">微信联系</h3>
         <p className="mt-4 text-base leading-7 text-slate-300">
           扫描二维码，通过微信联系我。
         </p>

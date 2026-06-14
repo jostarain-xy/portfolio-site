@@ -107,3 +107,120 @@ a {
   opacity: 1;
   transform: scale(1) translateY(0);
 }
+
+@keyframes focusOverlayOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    backdrop-filter: blur(18px);
+  }
+
+  44% {
+    opacity: 1;
+    backdrop-filter: blur(7px);
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes focusRingIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.42) rotate(-18deg);
+  }
+
+  to {
+    opacity: 0.72;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes focusCornerIn {
+  from {
+    opacity: 0;
+    transform: scale(1.22);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes focusScan {
+  0% {
+    opacity: 0;
+    transform: translate(-130%, -50%);
+  }
+
+  22%,
+  78% {
+    opacity: 0.82;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(130%, -50%);
+  }
+}
+
+@keyframes focusLockIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 8px)) scale(0.94);
+  }
+
+  35%,
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 4px)) scale(1);
+  }
+}
+
+.focus-intro-overlay {
+  animation: focusOverlayOut 1.72s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.focus-aperture-ring {
+  animation: focusRingIn 0.82s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both;
+}
+
+.focus-reticle-corner {
+  animation: focusCornerIn 0.58s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+}
+
+.focus-reticle-corner:nth-of-type(2) {
+  animation-delay: 0.2s;
+}
+
+.focus-reticle-corner:nth-of-type(3) {
+  animation-delay: 0.24s;
+}
+
+.focus-reticle-corner:nth-of-type(4) {
+  animation-delay: 0.28s;
+}
+
+.focus-scan-line {
+  animation: focusScan 0.86s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
+}
+
+.focus-lock-chip {
+  animation: focusLockIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.62s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focus-intro-overlay {
+    display: none;
+    animation: none;
+  }
+}

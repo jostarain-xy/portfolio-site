@@ -244,6 +244,23 @@ export default function PortfolioPage() {
     if (!root) return;
 
     const ctx = gsap.context(() => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduceMotion) {
+        gsap.fromTo(
+          ".camera-dock",
+          { autoAlpha: 0, x: -28, y: 10, scale: 0.96 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 0.72,
+            ease: "back.out(1.7)",
+            delay: 0.28,
+          }
+        );
+      }
+
       const updateDeck = (animate = false) => {
         const focusedIndex = hoveredIndex.current;
         const focusedP =
@@ -321,12 +338,17 @@ export default function PortfolioPage() {
       updateDeckRef.current = updateDeck;
       updateDeck(false);
 
+      if (reduceMotion) {
+        gsap.set(".focus-intro-overlay", { display: "none" });
+      }
+
       gsap.from(".portfolio-intro", {
         opacity: 0,
         y: 24,
         filter: "blur(10px)",
         duration: 0.8,
         ease: "power4.out",
+        delay: reduceMotion ? 0 : 0.72,
       });
 
       gsap.from(".stack-card", {
@@ -337,7 +359,7 @@ export default function PortfolioPage() {
         duration: 0.9,
         stagger: 0.05,
         ease: "power4.out",
-        delay: 0.12,
+        delay: reduceMotion ? 0.12 : 0.9,
         onComplete: () => updateDeck(false),
       });
 
@@ -855,42 +877,42 @@ export default function PortfolioPage() {
         </div>
       </div>
 
-      <div className="camera-dock fixed left-4 top-[96px] z-50 w-[min(360px,calc(100vw-2rem))] rounded-[26px] border border-black/10 bg-white/68 p-2.5 text-[#233b29] shadow-[0_18px_70px_rgba(20,30,20,0.12)] backdrop-blur-2xl transition-all duration-500">
-        <div className="mb-2 flex items-center gap-2">
+      <div className="camera-dock fixed left-3 top-[104px] z-50 w-[min(310px,calc(100vw-1.5rem))] rounded-[22px] border border-black/10 bg-white/68 p-2 text-[#233b29] shadow-[0_16px_54px_rgba(20,30,20,0.11)] backdrop-blur-2xl transition-all duration-500">
+        <div className="mb-1.5 flex items-center gap-1.5">
           <button
             type="button"
             onClick={triggerShutter}
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black/10 bg-[#111827] shadow-[0_12px_30px_rgba(15,23,42,0.18)] transition hover:scale-105 active:scale-95"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-black/10 bg-[#111827] shadow-[0_10px_24px_rgba(15,23,42,0.16)] transition hover:scale-105 active:scale-95"
             aria-label="Press shutter"
             title="Press shutter"
           >
-            <span className="h-5 w-5 rounded-full border border-white/70 bg-white/10 shadow-[inset_0_0_0_4px_rgba(255,255,255,0.18)]" />
+            <span className="h-4 w-4 rounded-full border border-white/70 bg-white/10 shadow-[inset_0_0_0_3px_rgba(255,255,255,0.18)]" />
           </button>
 
-          <div className="min-w-0 flex-1 rounded-[18px] border border-black/10 bg-[#111827] px-3 py-2 text-white shadow-[inset_0_0_18px_rgba(255,255,255,0.04)]">
-            <div className="camera-readout flex items-center justify-between gap-3">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-signal">
+          <div className="min-w-0 flex-1 rounded-[15px] border border-black/10 bg-[#111827] px-2.5 py-1.5 text-white shadow-[inset_0_0_16px_rgba(255,255,255,0.04)]">
+            <div className="camera-readout flex items-center justify-between gap-2">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-signal">
                 {cameraMode === "A"
                   ? "A 光圈优先"
                   : cameraMode === "S"
                     ? "S 快门优先"
                     : "M 手动"}
               </span>
-              <span className="truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-white/58">
+              <span className="truncate text-[9px] font-semibold uppercase tracking-[0.1em] text-white/58">
                 {aperture.label} / {shutter.label} / {iso.label}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="mb-2 grid grid-cols-3 gap-1.5">
+        <div className="mb-1.5 grid grid-cols-3 gap-1.5">
           {cameraModes.map((mode) => (
             <button
               key={mode.label}
               type="button"
               onClick={() => setCameraMode(mode.label)}
               className={[
-                "camera-mode-chip h-8 rounded-full border text-[10px] font-semibold uppercase tracking-[0.14em] transition-all duration-300",
+                "camera-mode-chip h-7 rounded-full border text-[9px] font-semibold uppercase tracking-[0.12em] transition-all duration-300",
                 cameraMode === mode.label
                   ? "border-signal bg-signal text-black shadow-[0_10px_26px_rgba(55,224,194,0.18)]"
                   : "border-black/10 bg-white/50 text-[#233b29]/58 hover:bg-white",
@@ -905,7 +927,7 @@ export default function PortfolioPage() {
         <div className="grid grid-cols-3 gap-1.5">
           <label
             className={[
-              "rounded-[16px] border px-2 py-1.5 transition-all duration-300",
+              "rounded-[14px] border px-2 py-1.5 transition-all duration-300",
               apertureSelectEnabled
                 ? "border-black/10 bg-white/55"
                 : "border-black/5 bg-black/[0.035] opacity-60",
@@ -930,7 +952,7 @@ export default function PortfolioPage() {
 
           <label
             className={[
-              "rounded-[16px] border px-2 py-1.5 transition-all duration-300",
+              "rounded-[14px] border px-2 py-1.5 transition-all duration-300",
               shutterSelectEnabled
                 ? "border-black/10 bg-white/55"
                 : "border-black/5 bg-black/[0.035] opacity-60",
@@ -953,7 +975,7 @@ export default function PortfolioPage() {
             </select>
           </label>
 
-          <label className="rounded-[16px] border border-black/10 bg-white/55 px-2 py-1.5 transition-all duration-300">
+          <label className="rounded-[14px] border border-black/10 bg-white/55 px-2 py-1.5 transition-all duration-300">
             <span className="mb-1 block text-[8px] font-semibold uppercase tracking-[0.18em] text-[#233b29]/44">
               感光度
             </span>
@@ -1011,6 +1033,31 @@ export default function PortfolioPage() {
         className="relative z-10 h-screen overflow-hidden"
         style={{ perspective: "2600px" }}
       >
+        <div className="focus-intro-overlay pointer-events-none absolute inset-0 z-[70] flex items-center justify-center bg-[#eef5ef]/18 backdrop-blur-[18px]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_28%,rgba(10,18,24,0.18)_68%,rgba(10,18,24,0.34)_100%)]" />
+          <div className="absolute inset-0 opacity-[0.2] [background-image:linear-gradient(rgba(16,33,43,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(16,33,43,0.14)_1px,transparent_1px)] [background-size:42px_42px]" />
+
+          <div className="focus-aperture-ring absolute left-1/2 top-1/2 h-[min(56vw,430px)] w-[min(56vw,430px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#37e0c2]/38 shadow-[0_0_90px_rgba(55,224,194,0.18)]">
+            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[#37e0c2]/45 to-transparent" />
+            <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#37e0c2]/45 to-transparent" />
+            <span className="absolute inset-[18%] rounded-full border border-white/24" />
+          </div>
+
+          <div className="relative h-[min(46vw,330px)] w-[min(72vw,520px)] text-[#10212b]">
+            <span className="focus-reticle-corner absolute left-0 top-0 h-12 w-12 border-l-2 border-t-2 border-[#37e0c2]" />
+            <span className="focus-reticle-corner absolute right-0 top-0 h-12 w-12 border-r-2 border-t-2 border-[#37e0c2]" />
+            <span className="focus-reticle-corner absolute bottom-0 left-0 h-12 w-12 border-b-2 border-l-2 border-[#37e0c2]" />
+            <span className="focus-reticle-corner absolute bottom-0 right-0 h-12 w-12 border-b-2 border-r-2 border-[#37e0c2]" />
+
+            <span className="focus-scan-line absolute left-1/2 top-1/2 h-[120%] w-12 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#37e0c2]/36 to-transparent blur-sm" />
+
+            <div className="focus-lock-chip absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-full border border-[#37e0c2]/50 bg-[#101820]/82 px-5 py-3 text-[11px] font-semibold tracking-[0.28em] text-[#d9fff8] shadow-[0_18px_60px_rgba(15,23,42,0.24)] backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-[#37e0c2] shadow-[0_0_18px_rgba(55,224,194,0.88)]" />
+              合焦完成
+            </div>
+          </div>
+        </div>
+
         <div className="portfolio-intro absolute left-1/2 top-7 z-40 w-[min(92vw,680px)] -translate-x-1/2 text-center md:top-8">
           <div
             className={[
@@ -1023,14 +1070,14 @@ export default function PortfolioPage() {
             <span className="absolute bottom-0 left-0 h-4 w-10 border-b border-l border-current opacity-22" />
             <span className="absolute bottom-0 right-0 h-4 w-10 border-b border-r border-current opacity-22" />
 
-            <div className="mb-1.5 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-4 text-[9px] font-semibold uppercase tracking-[0.32em] opacity-46">
+            <div className="mb-2 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-4 text-[10px] font-semibold tracking-[0.34em] opacity-52">
               <span className="h-px bg-current opacity-22" />
-              <span>Visual Archive / Motion Reel</span>
+              <span>作品选帧</span>
               <span className="h-px bg-current opacity-22" />
             </div>
 
             <h1
-              className="relative flex items-end justify-center text-[clamp(42px,6.2vw,82px)] font-black leading-[0.84] tracking-[-0.11em]"
+              className="relative flex items-center justify-center gap-1 text-[clamp(44px,7vw,92px)] font-black leading-[0.82] tracking-[-0.12em]"
               style={{
                 fontFamily:
                   '"STSong", "Songti SC", "Noto Serif SC", "Source Han Serif SC", serif',
@@ -1039,22 +1086,25 @@ export default function PortfolioPage() {
                   : "0 18px 55px rgba(15,23,42,0.12)",
               }}
             >
-              <span className="relative z-10">影像</span>
-              <span className="relative z-10 ml-1 text-transparent [-webkit-text-stroke:1.25px_currentColor]">
+              <span className="relative z-10">影</span>
+              <span className="relative z-10 -mx-1 text-transparent [-webkit-text-stroke:1.25px_currentColor] md:-mx-2">
+                像
+              </span>
+              <span className="relative z-10">
                 集
               </span>
-              <span className="ml-3 hidden translate-y-[-0.2em] border-l border-current pl-3 text-[10px] font-semibold uppercase leading-[1.35] tracking-[0.24em] opacity-42 md:block">
-                Selected
+              <span className="absolute -right-9 top-1/2 mt-0.5 mr-[-20px] hidden -translate-y-1/2 border-l border-current py-[5px] pl-3 text-[11px] font-semibold leading-[1.35] tracking-[0.2em] opacity-46 md:block">
+                精选
                 <br />
-                Frames
+                片段
               </span>
               <span className="absolute -bottom-2 left-1/2 h-2 w-[74%] -translate-x-1/2 bg-signal/35 blur-md" />
             </h1>
 
-            <div className="mt-2 grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] opacity-42">
-              <span>Frame</span>
+            <div className="mt-3 grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 text-[10px] font-semibold tracking-[0.24em] opacity-46">
+              <span>镜头</span>
               <span className="h-px bg-current opacity-18" />
-              <span>Cut / Story / Rhythm</span>
+              <span>剪辑 / 叙事 / 节奏</span>
             </div>
           </div>
         </div>
