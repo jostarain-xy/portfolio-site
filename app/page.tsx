@@ -16,7 +16,7 @@ const featuredWork = [
     description:
       "为邵阳市自来水宝润二次供水有限责任公司拍摄制作企业宣传片，负责整体拍摄执行与影像呈现。",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/BaoRunvideo%20videos.mp4",
-    posterSrc: withBasePath("/images/pic/03.jpg"),
+    posterSrc: withBasePath("/images/封面/宝润.png"),
   },
   {
     title: "喜哥视界人物访谈：高志凯专题对谈",
@@ -25,7 +25,7 @@ const featuredWork = [
     description:
       "参与喜哥视界访谈， 策划并完成高志凯先生人物深度访谈全流程内容创作",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/gaozhikai.mp4",
-    posterSrc: withBasePath("/images/pic/17.jpg"),
+    posterSrc: withBasePath("/images/封面/高志凯.png"),
   },
   {
     title: "那曾一闪而过的夏天",
@@ -34,7 +34,7 @@ const featuredWork = [
     description:
       "既然注定要分别，那就把快门定格在这个夏天",
     videoSrc: "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/%E6%88%91%E4%BB%AC%E4%B8%8D%E4%BC%9A%E6%98%8E%E7%99%BD%E9%82%A3%E6%9B%BE%E6%98%AF%E4%B8%80%E9%97%AA%E8%80%8C%E8%BF%87%E7%9A%84%E5%A4%8F%E5%A4%A9.mp4",
-    posterSrc: withBasePath("/images/pic/08.jpg"),
+    posterSrc: withBasePath("/images/封面/last summer.png"),
   },
 ];
 
@@ -169,9 +169,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main ref={container} className="relative overflow-hidden bg-[#f4f1ea] text-[#111827]">
-      <section className="relative min-h-[calc(100vh-73px)] overflow-hidden">
-<div className="pointer-events-none absolute right-10 top-28 hidden h-28 w-28 rounded-full border border-black/10 md:block" />
+    <main ref={container} className="relative overflow-hidden bg-[#0d1116] text-[#f4f1ea]">
+      <section className="relative min-h-[calc(100vh-73px)] overflow-hidden bg-[#0d1116]">
+<div className="pointer-events-none absolute right-10 top-28 hidden h-28 w-28 rounded-full border border-white/10 md:block" />
 <div className="pointer-events-none absolute right-20 top-40 hidden h-2 w-2 rounded-full bg-signal shadow-[0_0_24px_rgba(55,224,194,0.8)] md:block" />
         <video
   src="https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/showreel.mp4"
@@ -181,53 +181,62 @@ export default function Home() {
   playsInline
   preload="metadata"
   poster={withBasePath("/images/pic/08.jpg")}
-  className="hero-bg-video pointer-events-none absolute inset-0 h-full w-full object-cover opacity-70 saturate-[0.9] contrast-[0.95]"
+  className="hero-bg-video pointer-events-none absolute inset-0 h-full w-full object-cover opacity-76 saturate-[0.72] contrast-[0.92] brightness-[0.62]"
 />
 
-<div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#efe7da]/92 via-[#efe7da]/58 to-[#efe7da]/18" />
-<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#efe7da]/88 via-[#efe7da]/20 to-[#efe7da]/45" />
-<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(55,224,194,0.16),transparent_28%)]" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:40px_40px]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-44 bg-gradient-to-b from-transparent via-[#f4f1ea]/76 to-[#f7f3ec]" />
+<div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#07090c]/88 via-[#07090c]/42 to-[#07090c]/20" />
+<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07090c]/92 via-[#07090c]/22 to-[#07090c]/44" />
+<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_74%_34%,rgba(55,224,194,0.14),transparent_30%)]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle,rgba(255,255,255,0.34)_0.7px,transparent_0.7px)] [background-size:3px_3px]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-44 bg-gradient-to-b from-transparent via-[#0d1116]/78 to-[#f7f3ec]" />
 
-        <div className="relative z-10 mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl grid-cols-1 items-end gap-12 px-6 pb-20 pt-32 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="max-w-5xl space-y-8">
-            <p className="hero-kicker text-xs font-semibold uppercase tracking-[0.36em] text-signal">
-              摄影 / 剪辑 / 内容创作
-            </p>
-
-            <div className="space-y-6">
-              <h1 className="hero-heading text-6xl font-semibold leading-[0.98] tracking-[-0.08em] text-[#1b2230] md:text-8xl lg:text-9xl">
-  {heroTitle.map((line) => (
-    <span key={line} className="block overflow-hidden">
-      {line.split("").map((char, index) => (
-        <span
-          key={`${line}-${index}`}
-          className="hero-char inline-block"
-        >
-          {char}
-        </span>
-      ))}
-    </span>
-  ))}
-</h1>
-
-              <p className="hero-copy max-w-2xl text-base leading-8 text-slate-700 md:text-lg">
-                生活里的很多瞬间如果不被记录，就会悄悄消失，而被镜头留下的画面，哪怕再普通，也会变得有重量。
-              </p>
+        <div className="relative z-10 mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-16 pt-20">
+          <div className="hero-copy-block max-w-6xl">
+            <div className="hero-kicker mb-6 text-[13px] font-semibold leading-none text-white">
+              <span>摄影 / 剪辑 / 内容创作</span>
+              <span>JOESTAR / MOTION</span>
             </div>
 
-            <div className="hero-actions flex flex-wrap items-center gap-4">
+            <div className="hero-type-stack">
+              <h1
+                className="hero-heading"
+                aria-label={heroTitle.join("")}
+              >
+                {heroTitle.map((line, lineIndex) => (
+                  <span
+                    key={line}
+                    className={`hero-line hero-line-${lineIndex + 1} block`}
+                  >
+                    {line.split("").map((char, index) => (
+                      <span
+                        key={`${line}-${index}`}
+                        className="hero-char inline-block"
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </h1>
+
+              <div className="hero-copy">
+                <p>
+                  生活里的很多瞬间如果不被记录，就会悄悄消失，而被镜头留下的画面，哪怕再普通，也会变得有重量。
+                </p>
+              </div>
+            </div>
+
+            <div className="hero-actions mt-7 hidden flex-wrap items-center gap-4 md:flex">
               <Link
                 href="/portfolio"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:bg-signal"
+                className="hero-primary-action rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:bg-signal"
               >
                 所有作品
               </Link>
 
               <Link
                 href="/about"
-                className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+                className="hero-secondary-action rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
               >
                 关于我
               </Link>

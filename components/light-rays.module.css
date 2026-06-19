@@ -1,0 +1,85 @@
+.lightRays {
+  --rays-rgb: 55 224 194;
+  --rays-speed: 1;
+  --ray-origin-x: 50%;
+  --ray-origin-y: -12%;
+  --ray-mx: 50%;
+  --ray-my: 42%;
+  --ray-opacity: 0.62;
+  --ray-spread: 42deg;
+  --ray-length: 120%;
+  --ray-noise: 0.08;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+  isolation: isolate;
+}
+
+.lightRays::before,
+.lightRays::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.lightRays::before {
+  inset: -24%;
+  background:
+    repeating-conic-gradient(
+      from -18deg at var(--ray-origin-x) var(--ray-origin-y),
+      rgb(var(--rays-rgb) / 0) 0deg,
+      rgb(var(--rays-rgb) / 0.24) 3deg,
+      rgb(var(--rays-rgb) / 0.055) 8deg,
+      rgb(var(--rays-rgb) / 0) var(--ray-spread)
+    ),
+    radial-gradient(
+      ellipse var(--ray-length) 72% at var(--ray-origin-x) var(--ray-origin-y),
+      rgb(var(--rays-rgb) / 0.3),
+      rgb(var(--rays-rgb) / 0.12) 28%,
+      rgb(var(--rays-rgb) / 0.035) 54%,
+      transparent 76%
+    );
+  filter: blur(18px);
+  mask-image: linear-gradient(to bottom, black 0%, black 62%, transparent 100%);
+  mix-blend-mode: screen;
+  opacity: var(--ray-opacity);
+  transform-origin: var(--ray-origin-x) var(--ray-origin-y);
+  animation: raysDrift calc(13s / var(--rays-speed)) ease-in-out infinite alternate;
+}
+
+.lightRays::after {
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at var(--ray-mx) var(--ray-my),
+      rgb(var(--rays-rgb) / 0.2),
+      rgb(var(--rays-rgb) / 0.06) 18%,
+      transparent 42%
+    ),
+    radial-gradient(circle, rgb(255 255 255 / 0.08) 0.8px, transparent 1px);
+  background-size:
+    100% 100%,
+    3px 3px;
+  mix-blend-mode: screen;
+  opacity: calc(0.42 + var(--ray-noise));
+}
+
+@keyframes raysDrift {
+  0% {
+    transform: translate3d(-1.4%, -0.4%, 0) rotate(-2deg) scale(1.02);
+  }
+
+  100% {
+    transform: translate3d(1.7%, 0.8%, 0) rotate(2.5deg) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightRays::before {
+    animation: none;
+  }
+}

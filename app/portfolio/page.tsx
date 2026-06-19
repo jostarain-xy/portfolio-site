@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
+import LightRays from "@/components/light-rays";
 import { withBasePath } from "@/lib/site-paths";
+import styles from "./portfolio.module.css";
 
 type Work = {
   title: string;
@@ -26,7 +28,7 @@ const works: Work[] = [
       "遇见彼此是六十亿分之一的幸运，而双向奔赴的星光，才是真正能穿越时空的永恒。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/lucky-wedding.mp4",
-    posterSrc: withBasePath("/images/pic/24.jpg"),
+    posterSrc: withBasePath("/images/封面/lucky wedding.png"),
     rotate: -3,
   },
   {
@@ -37,7 +39,7 @@ const works: Work[] = [
       "相识相遇相知，一切或许都是命运的安排，而和你在一起的时光，也全都很耀眼。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/forever.mp4",
-    posterSrc: withBasePath("/images/pic/25.jpg"),
+    posterSrc: withBasePath("/images/封面/Foever.png"),
     rotate: 2,
   },
   {
@@ -47,7 +49,7 @@ const works: Work[] = [
     description: "既然注定要分别，那就把快门定格在这个夏天。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/bali.mp4",
-    posterSrc: withBasePath("/images/pic/08.jpg"),
+    posterSrc: withBasePath("/images/封面/bali.png"),
     rotate: -1,
   },
   {
@@ -58,7 +60,7 @@ const works: Work[] = [
       "为邵阳市自来水宝润二次供水有限责任公司拍摄制作企业宣传片，完成企业形象影像呈现。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/BaoRunvideo%20videos.mp4",
-    posterSrc: withBasePath("/images/pic/03.jpg"),
+    posterSrc: withBasePath("/images/封面/宝润.png"),
     rotate: 3,
   },
   {
@@ -68,7 +70,7 @@ const works: Work[] = [
     description: "围绕长对谈内容进行结构整理、节奏剪辑和信息强化。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/gaozhikai.mp4",
-    posterSrc: withBasePath("/images/pic/17.jpg"),
+    posterSrc: withBasePath("/images/封面/高志凯.png"),
     rotate: -2,
   },
   {
@@ -79,18 +81,18 @@ const works: Work[] = [
       "喧嚷着蝉鸣、黏人的汗水、冰镇的饮料、发呆的下午，刚在梦里想起的谁，是想起哪样一个夏天。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/The%20Summer.mp4",
-    posterSrc: withBasePath("/images/pic/20.jpg"),
+    posterSrc: withBasePath("/images/封面/summer.png"),
     rotate: 2.5,
   },
   {
-    title: "箭至人心",
+    title: "筷至人心",
     category: "Documentary",
     role: "摄影 / 分镜脚本",
     description:
       "参与制作纪录片毕业设计，负责分镜设计与部分镜头拍摄制作。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/kuaizhi.mp4",
-    posterSrc: withBasePath("/images/pic/19.jpg"),
+    posterSrc: withBasePath("/images/封面/筷子.png"),
     rotate: -3,
   },
   {
@@ -101,7 +103,7 @@ const works: Work[] = [
       "在 UE5 中完成视频场景以及摄像机镜头制作，并完成剪辑成片。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/jingguan.mp4",
-    posterSrc: withBasePath("/images/pic/23.jpg"),
+    posterSrc: withBasePath("/images/封面/景观.png"),
     rotate: 2,
   },
   {
@@ -112,7 +114,7 @@ const works: Work[] = [
       "为本地茶文化品牌制作商业宣传片，主要负责导演及后期剪辑。",
     videoSrc:
       "https://w1h0khvwm8ysntpz.public.blob.vercel-storage.com/yunwu%20tea.mp4",
-    posterSrc: withBasePath("/images/pic/01.jpg"),
+    posterSrc: withBasePath("/images/封面/大云山.png"),
     rotate: -1.5,
   },
 ];
@@ -190,11 +192,13 @@ export default function PortfolioPage() {
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeWork = activeIndex === null ? null : works[activeIndex];
-  const [cinemaMode, setCinemaMode] = useState(false);
+  const [cinemaMode, setCinemaMode] = useState(true);
+  const [cameraDockOpen, setCameraDockOpen] = useState(false);
   const [cameraMode, setCameraMode] = useState<CameraMode>("A");
   const [apertureIndex, setApertureIndex] = useState(1);
   const [shutterIndex, setShutterIndex] = useState(2);
   const [isoIndex, setIsoIndex] = useState(1);
+  const cameraDockCloseTimer = useRef<number | null>(null);
 
   const autoApertureIndex = Math.max(
     0,
@@ -218,6 +222,26 @@ export default function PortfolioPage() {
   const darkOpacity = Math.max(0, -exposureValue) * 0.85;
   const shutterSelectEnabled = cameraMode !== "A";
   const apertureSelectEnabled = cameraMode !== "S";
+
+  const openCameraDock = () => {
+    if (cameraDockCloseTimer.current !== null) {
+      window.clearTimeout(cameraDockCloseTimer.current);
+      cameraDockCloseTimer.current = null;
+    }
+
+    setCameraDockOpen(true);
+  };
+
+  const scheduleCameraDockClose = () => {
+    if (cameraDockCloseTimer.current !== null) {
+      window.clearTimeout(cameraDockCloseTimer.current);
+    }
+
+    cameraDockCloseTimer.current = window.setTimeout(() => {
+      setCameraDockOpen(false);
+      cameraDockCloseTimer.current = null;
+    }, 900);
+  };
 
   const triggerShutter = () => {
     gsap.fromTo(
@@ -249,6 +273,14 @@ export default function PortfolioPage() {
       { scale: 1, duration: 0.28, ease: "back.out(2)" }
     );
   }, [cameraMode, apertureIndex, shutterIndex, isoIndex]);
+
+  useEffect(() => {
+    return () => {
+      if (cameraDockCloseTimer.current !== null) {
+        window.clearTimeout(cameraDockCloseTimer.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const root = container.current;
@@ -323,9 +355,7 @@ export default function PortfolioPage() {
             rotateY: hovered ? -4 : -18 + p * 1.4,
             rotateZ: hovered ? 0 : works[index].rotate * 0.45 + p * 1.2,
             opacity,
-            filter: `blur(${
-              !hovered && (depth > 4 || isNearFocused > 0.6) ? 1.5 : 0
-            }px)`,
+            filter: "none",
             zIndex: hovered
               ? 6000
               : Math.round(1000 - depth * 90 - isNearFocused * 200),
@@ -348,6 +378,20 @@ export default function PortfolioPage() {
 
       updateDeckRef.current = updateDeck;
       updateDeck(false);
+
+      let deckRaf = 0;
+      let pendingDeckAnimation = false;
+      const requestDeckUpdate = (animate = false) => {
+        pendingDeckAnimation = pendingDeckAnimation || animate;
+        if (deckRaf) return;
+
+        deckRaf = requestAnimationFrame(() => {
+          deckRaf = 0;
+          const shouldAnimate = pendingDeckAnimation;
+          pendingDeckAnimation = false;
+          updateDeck(shouldAnimate);
+        });
+      };
 
       if (reduceMotion) {
         gsap.set(".focus-intro-overlay", { display: "none" });
@@ -398,7 +442,7 @@ export default function PortfolioPage() {
         if (hoveredIndex.current !== normalizedIndex) {
           hoveredIndex.current = normalizedIndex;
           velocity.current = 0;
-          updateDeckRef.current(true);
+          requestDeckUpdate(true);
         }
       };
 
@@ -406,7 +450,7 @@ export default function PortfolioPage() {
         if (activeIndexRef.current !== null) return;
         hoveredIndex.current = null;
         velocity.current = 0;
-        updateDeckRef.current(true);
+        requestDeckUpdate(true);
       };
 
       const handlePointerDown = (event: PointerEvent) => {
@@ -433,7 +477,7 @@ export default function PortfolioPage() {
           if (!hasDragged.current) {
             hoveredIndex.current = null;
             velocity.current = 0;
-            updateDeckRef.current(false);
+            requestDeckUpdate(false);
           }
           hasDragged.current = true;
         }
@@ -447,7 +491,7 @@ export default function PortfolioPage() {
         velocity.current = ((event.clientY - lastY.current) / timeDelta) * 0.1;
         lastY.current = event.clientY;
         lastTime.current = now;
-        updateDeck(false);
+        requestDeckUpdate(false);
       };
 
       const handlePointerUp = (event: PointerEvent) => {
@@ -476,14 +520,29 @@ export default function PortfolioPage() {
 
         if (Math.abs(velocity.current) > 0.0001) {
           position.current = wrapPosition(position.current + velocity.current);
-          velocity.current *= 0.9;
+          velocity.current *= 0.92;
           updateDeck(false);
         }
+      };
+
+      const handleWheel = (event: WheelEvent) => {
+        if (activeIndexRef.current !== null) return;
+
+        event.preventDefault();
+        hoveredIndex.current = null;
+        const deltaScale = event.deltaMode === 1 ? 16 : 1;
+        velocity.current = Math.max(
+          -0.22,
+          Math.min(0.22, velocity.current + event.deltaY * deltaScale * 0.00055)
+        );
+        position.current = wrapPosition(position.current + velocity.current);
+        requestDeckUpdate(false);
       };
 
       deckArea?.addEventListener("pointermove", handleDeckPointerMove);
       deckArea?.addEventListener("pointerleave", handleDeckPointerLeave);
       deckArea?.addEventListener("pointerdown", handlePointerDown);
+      deckArea?.addEventListener("wheel", handleWheel, { passive: false });
       window.addEventListener("pointermove", handlePointerMove);
       window.addEventListener("pointerup", handlePointerUp);
       window.addEventListener("pointercancel", handlePointerUp);
@@ -493,10 +552,12 @@ export default function PortfolioPage() {
         deckArea?.removeEventListener("pointermove", handleDeckPointerMove);
         deckArea?.removeEventListener("pointerleave", handleDeckPointerLeave);
         deckArea?.removeEventListener("pointerdown", handlePointerDown);
+        deckArea?.removeEventListener("wheel", handleWheel);
         window.removeEventListener("pointermove", handlePointerMove);
         window.removeEventListener("pointerup", handlePointerUp);
         window.removeEventListener("pointercancel", handlePointerUp);
         gsap.ticker.remove(tick);
+        if (deckRaf) cancelAnimationFrame(deckRaf);
       };
     }, root);
 
@@ -747,19 +808,35 @@ export default function PortfolioPage() {
       <div
         className="pointer-events-none fixed inset-0 transition-opacity duration-700"
         style={{
-          opacity: cinemaMode ? 0.95 : 1,
+          opacity: cinemaMode ? 1 : 0.92,
           background: cinemaMode
-            ? "linear-gradient(135deg, #07090a 0%, #101616 46%, #090b0c 100%)"
+            ? "linear-gradient(135deg, #030607 0%, #071113 42%, #050709 100%)"
             : "linear-gradient(135deg, #fbf8f1 0%, #ece8dc 48%, #f7f3e8 100%)",
         }}
       />
 
+      <div className="pointer-events-none fixed inset-0 z-[1] opacity-85 mix-blend-screen">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#37e0c2"
+          raysSpeed={0.72}
+          lightSpread={0.82}
+          rayLength={1.28}
+          fadeDistance={1.2}
+          saturation={0.78}
+          followMouse
+          mouseInfluence={0.18}
+          noiseAmount={0.12}
+          distortion={0.08}
+        />
+      </div>
+
       <div
         className="pointer-events-none fixed inset-0 transition-opacity duration-700"
         style={{
-          opacity: cinemaMode ? 0.74 : 0.88,
+          opacity: cinemaMode ? 0.82 : 0.88,
           background: cinemaMode
-            ? "radial-gradient(720px circle at var(--mx, 50vw) var(--my, 50vh), rgba(55,224,194,0.13), transparent 62%), radial-gradient(980px circle at 50% 55%, rgba(255,255,255,0.07), transparent 42%), radial-gradient(900px circle at 50% 110%, rgba(0,0,0,0.74), transparent 58%)"
+            ? "radial-gradient(720px circle at var(--mx, 50vw) var(--my, 50vh), rgba(55,224,194,0.16), transparent 62%), radial-gradient(980px circle at 50% 55%, rgba(255,255,255,0.055), transparent 42%), radial-gradient(900px circle at 50% 110%, rgba(0,0,0,0.9), transparent 58%)"
             : "radial-gradient(720px circle at var(--mx, 50vw) var(--my, 50vh), rgba(55,224,194,0.14), transparent 62%), radial-gradient(980px circle at 50% 55%, rgba(255,255,255,0.88), transparent 42%), radial-gradient(900px circle at 50% 108%, rgba(28,31,28,0.12), transparent 58%)",
         }}
       />
@@ -868,8 +945,13 @@ export default function PortfolioPage() {
         <span className="absolute right-0 top-1/2 h-px w-10 -translate-y-1/2 bg-current opacity-12" />
       </div>
 
-      <div className="pointer-events-none fixed left-4 top-[15vh] z-[2] hidden w-24 rounded-[26px] border border-black/10 bg-white/24 p-3 shadow-[0_24px_90px_rgba(31,40,28,0.06)] backdrop-blur-xl min-[760px]:block">
-        <div className="mb-3 flex items-center justify-between text-[9px] uppercase tracking-[0.18em] text-[#233b29]/45">
+      <div
+        className={[
+          "pointer-events-none fixed left-4 top-[15vh] z-[2] hidden w-24 rounded-[26px] border p-3 shadow-[0_24px_90px_rgba(31,40,28,0.06)] backdrop-blur-xl min-[760px]:block",
+          cinemaMode ? "border-white/10 bg-[rgba(7,17,19,0.58)] text-white" : "border-black/10 bg-white/24 text-[#233b29]",
+        ].join(" ")}
+      >
+        <div className="mb-3 flex items-center justify-between text-[9px] uppercase tracking-[0.18em] opacity-45">
           <span>Film</span>
           <span>Roll</span>
         </div>
@@ -888,125 +970,149 @@ export default function PortfolioPage() {
         </div>
       </div>
 
-      <div className="camera-dock fixed left-3 top-[104px] z-50 w-[min(310px,calc(100vw-1.5rem))] rounded-[22px] border border-black/10 bg-white/68 p-2 text-[#233b29] shadow-[0_16px_54px_rgba(20,30,20,0.11)] backdrop-blur-2xl transition-all duration-500">
-        <div className="mb-1.5 flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={triggerShutter}
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-black/10 bg-[#111827] shadow-[0_10px_24px_rgba(15,23,42,0.16)] transition hover:scale-105 active:scale-95"
-            aria-label="Press shutter"
-            title="Press shutter"
-          >
-            <span className="h-4 w-4 rounded-full border border-white/70 bg-white/10 shadow-[inset_0_0_0_3px_rgba(255,255,255,0.18)]" />
-          </button>
+      <div
+        className={[
+          "camera-dock",
+          styles.cameraDock,
+          cameraDockOpen ? styles.cameraDockOpen : styles.cameraDockClosed,
+          cinemaMode ? styles.cameraDockDark : styles.cameraDockLight,
+        ].join(" ")}
+        onMouseEnter={openCameraDock}
+        onMouseLeave={scheduleCameraDockClose}
+        onFocusCapture={openCameraDock}
+        onBlurCapture={scheduleCameraDockClose}
+      >
+        <button
+          type="button"
+          onClick={() => {
+            if (!cameraDockOpen) {
+              openCameraDock();
+              return;
+            }
 
-          <div className="min-w-0 flex-1 rounded-[15px] border border-black/10 bg-[#111827] px-2.5 py-1.5 text-white shadow-[inset_0_0_16px_rgba(255,255,255,0.04)]">
-            <div className="camera-readout flex items-center justify-between gap-2">
-              <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-signal">
-                {cameraMode === "A"
-                  ? "A 光圈优先"
-                  : cameraMode === "S"
-                    ? "S 快门优先"
-                    : "M 手动"}
-              </span>
-              <span className="truncate text-[9px] font-semibold uppercase tracking-[0.1em] text-white/58">
-                {aperture.label} / {shutter.label} / {iso.label}
-              </span>
+            triggerShutter();
+          }}
+          className={styles.cameraShutter}
+          aria-label={cameraDockOpen ? "拍摄" : "展开相机控制"}
+          aria-expanded={cameraDockOpen}
+          title={cameraDockOpen ? "拍摄" : "展开相机控制"}
+        >
+          <span className={styles.cameraShutterRing} />
+          <span className={styles.cameraShutterCore} />
+        </button>
+
+        <div className={styles.cameraPanel} aria-hidden={!cameraDockOpen}>
+          <div className={styles.cameraTopBar}>
+            <div>
+              <p className={styles.cameraEyebrow}>Camera</p>
+              <div className="camera-readout flex items-center gap-2">
+                <span className={styles.cameraModeName}>
+                  {cameraMode === "A"
+                    ? "光圈优先"
+                    : cameraMode === "S"
+                      ? "快门优先"
+                      : "手动控制"}
+                </span>
+                <span className={styles.cameraReadout}>
+                  {aperture.label} / {shutter.label} / {iso.label}
+                </span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="mb-1.5 grid grid-cols-3 gap-1.5">
-          {cameraModes.map((mode) => (
             <button
-              key={mode.label}
               type="button"
-              onClick={() => setCameraMode(mode.label)}
-              className={[
-                "camera-mode-chip h-7 rounded-full border text-[9px] font-semibold uppercase tracking-[0.12em] transition-all duration-300",
-                cameraMode === mode.label
-                  ? "border-signal bg-signal text-black shadow-[0_10px_26px_rgba(55,224,194,0.18)]"
-                  : "border-black/10 bg-white/50 text-[#233b29]/58 hover:bg-white",
-              ].join(" ")}
-              title={mode.name}
+              onClick={() => setCameraDockOpen(false)}
+              className={styles.cameraCollapseButton}
+              aria-label="收起相机控制"
+              title="收起"
             >
-              {mode.label}
+              收起
             </button>
-          ))}
-        </div>
+          </div>
 
-        <div className="grid grid-cols-3 gap-1.5">
-          <label
-            className={[
-              "rounded-[14px] border px-2 py-1.5 transition-all duration-300",
-              apertureSelectEnabled
-                ? "border-black/10 bg-white/55"
-                : "border-black/5 bg-black/[0.035] opacity-60",
-            ].join(" ")}
-          >
-            <span className="mb-1 block text-[8px] font-semibold uppercase tracking-[0.18em] text-[#233b29]/44">
-              光圈
-            </span>
-            <select
-              value={effectiveApertureIndex}
-              disabled={!apertureSelectEnabled}
-              onChange={(event) => setApertureIndex(Number(event.target.value))}
-              className="w-full bg-transparent text-[11px] font-semibold text-[#111827] outline-none disabled:cursor-not-allowed"
-            >
-              {apertureStops.map((stop, index) => (
-                <option key={stop.label} value={index}>
-                  {stop.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className={styles.cameraModeGroup}>
+            {cameraModes.map((mode) => (
+              <button
+                key={mode.label}
+                type="button"
+                onClick={() => setCameraMode(mode.label)}
+                className={[
+                  "camera-mode-chip",
+                  styles.cameraModeButton,
+                  cameraMode === mode.label ? styles.cameraModeButtonActive : "",
+                ].join(" ")}
+                title={mode.name}
+              >
+                <span>{mode.label}</span>
+              </button>
+            ))}
+          </div>
 
-          <label
-            className={[
-              "rounded-[14px] border px-2 py-1.5 transition-all duration-300",
-              shutterSelectEnabled
-                ? "border-black/10 bg-white/55"
-                : "border-black/5 bg-black/[0.035] opacity-60",
-            ].join(" ")}
-          >
-            <span className="mb-1 block text-[8px] font-semibold uppercase tracking-[0.18em] text-[#233b29]/44">
-              快门
-            </span>
-            <select
-              value={effectiveShutterIndex}
-              disabled={!shutterSelectEnabled}
-              onChange={(event) => setShutterIndex(Number(event.target.value))}
-              className="w-full bg-transparent text-[11px] font-semibold text-[#111827] outline-none disabled:cursor-not-allowed"
+          <div className={styles.cameraControlGrid}>
+            <label
+              className={[
+                styles.cameraControlCard,
+                !apertureSelectEnabled ? styles.cameraControlDisabled : "",
+              ].join(" ")}
             >
-              {shutterSpeeds.map((speed, index) => (
-                <option key={speed.label} value={index}>
-                  {speed.label}
-                </option>
-              ))}
-            </select>
-          </label>
+              <span>光圈</span>
+              <select
+                value={effectiveApertureIndex}
+                disabled={!apertureSelectEnabled}
+                onChange={(event) => setApertureIndex(Number(event.target.value))}
+              >
+                {apertureStops.map((stop, index) => (
+                  <option key={stop.label} value={index}>
+                    {stop.label}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-          <label className="rounded-[14px] border border-black/10 bg-white/55 px-2 py-1.5 transition-all duration-300">
-            <span className="mb-1 block text-[8px] font-semibold uppercase tracking-[0.18em] text-[#233b29]/44">
-              感光度
-            </span>
-            <select
-              value={isoIndex}
-              onChange={(event) => setIsoIndex(Number(event.target.value))}
-              className="w-full bg-transparent text-[11px] font-semibold text-[#111827] outline-none"
+            <label
+              className={[
+                styles.cameraControlCard,
+                !shutterSelectEnabled ? styles.cameraControlDisabled : "",
+              ].join(" ")}
             >
-              {isoStops.map((stop, index) => (
-                <option key={stop.label} value={index}>
-                  {stop.label.replace("ISO ", "")}
-                </option>
-              ))}
-            </select>
-          </label>
+              <span>快门</span>
+              <select
+                value={effectiveShutterIndex}
+                disabled={!shutterSelectEnabled}
+                onChange={(event) => setShutterIndex(Number(event.target.value))}
+              >
+                {shutterSpeeds.map((speed, index) => (
+                  <option key={speed.label} value={index}>
+                    {speed.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className={styles.cameraControlCard}>
+              <span>ISO</span>
+              <select
+                value={isoIndex}
+                onChange={(event) => setIsoIndex(Number(event.target.value))}
+              >
+                {isoStops.map((stop, index) => (
+                  <option key={stop.label} value={index}>
+                    {stop.label.replace("ISO ", "")}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
         </div>
       </div>
 
-      <div className="pointer-events-none fixed inset-x-3 bottom-6 z-[2] rounded-[28px] border border-black/10 bg-white/24 p-3 shadow-[0_24px_90px_rgba(31,40,28,0.06)] backdrop-blur-xl md:inset-x-[5vw]">
-        <div className="mb-3 flex items-center justify-between text-[9px] uppercase tracking-[0.2em] text-[#233b29]/45">
+      <div
+        className={[
+          "pointer-events-none fixed inset-x-3 bottom-6 z-[2] rounded-[28px] border p-3 shadow-[0_24px_90px_rgba(31,40,28,0.06)] backdrop-blur-xl md:inset-x-[5vw]",
+          cinemaMode ? "border-white/10 bg-[rgba(7,17,19,0.52)] text-white" : "border-black/10 bg-white/24 text-[#233b29]",
+        ].join(" ")}
+      >
+        <div className="mb-3 flex items-center justify-between text-[9px] uppercase tracking-[0.2em] opacity-45">
           <span>Contact Sheet</span>
           <span>Archive Roll / Drag To Browse</span>
         </div>
@@ -1035,7 +1141,12 @@ export default function PortfolioPage() {
       <button
         type="button"
         onClick={() => setCinemaMode((value) => !value)}
-        className="fixed bottom-6 left-6 z-40 rounded-full border border-black/10 bg-white/72 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#233b29]/70 shadow-[0_18px_60px_rgba(20,30,20,0.10)] backdrop-blur-xl transition hover:bg-white hover:text-[#111827]"
+        className={[
+          "fixed bottom-6 left-6 z-40 rounded-full border px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] shadow-[0_18px_60px_rgba(20,30,20,0.10)] backdrop-blur-xl transition",
+          cinemaMode
+            ? "border-white/10 bg-[rgba(7,17,19,0.76)] text-white/70 hover:bg-white hover:text-[#111827]"
+            : "border-black/10 bg-white/72 text-[#233b29]/70 hover:bg-white hover:text-[#111827]",
+        ].join(" ")}
       >
         {cinemaMode ? "Studio Light" : "Studio Dark"}
       </button>
@@ -1044,8 +1155,8 @@ export default function PortfolioPage() {
         className="relative z-10 h-screen overflow-hidden"
         style={{ perspective: "2600px" }}
       >
-        <div className="focus-intro-overlay pointer-events-none absolute inset-0 z-[70] flex items-center justify-center bg-[#eef5ef]/18 backdrop-blur-[18px]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_28%,rgba(10,18,24,0.18)_68%,rgba(10,18,24,0.34)_100%)]" />
+        <div className="focus-intro-overlay pointer-events-none absolute inset-0 z-[70] flex items-center justify-center bg-[#020607]/38 backdrop-blur-[18px]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_28%,rgba(2,8,12,0.48)_68%,rgba(2,8,12,0.72)_100%)]" />
           <div className="absolute inset-0 opacity-[0.2] [background-image:linear-gradient(rgba(16,33,43,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(16,33,43,0.14)_1px,transparent_1px)] [background-size:42px_42px]" />
 
           <div className="focus-aperture-ring absolute left-1/2 top-1/2 h-[min(56vw,430px)] w-[min(56vw,430px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#37e0c2]/38 shadow-[0_0_90px_rgba(55,224,194,0.18)]">
@@ -1054,7 +1165,7 @@ export default function PortfolioPage() {
             <span className="absolute inset-[18%] rounded-full border border-white/24" />
           </div>
 
-          <div className="relative h-[min(46vw,330px)] w-[min(72vw,520px)] text-[#10212b]">
+          <div className="relative h-[min(46vw,330px)] w-[min(72vw,520px)] text-[#d9fff8]">
             <span className="focus-reticle-corner absolute left-0 top-0 h-12 w-12 border-l-2 border-t-2 border-[#37e0c2]" />
             <span className="focus-reticle-corner absolute right-0 top-0 h-12 w-12 border-r-2 border-t-2 border-[#37e0c2]" />
             <span className="focus-reticle-corner absolute bottom-0 left-0 h-12 w-12 border-b-2 border-l-2 border-[#37e0c2]" />
@@ -1104,11 +1215,6 @@ export default function PortfolioPage() {
               <span className="relative z-10">
                 集
               </span>
-              <span className="absolute -right-9 top-1/2 mt-0.5 mr-[-20px] hidden -translate-y-1/2 border-l border-current py-[5px] pl-3 text-[11px] font-semibold leading-[1.35] tracking-[0.2em] opacity-46 md:block">
-                精选
-                <br />
-                片段
-              </span>
               <span className="absolute -bottom-2 left-1/2 h-2 w-[74%] -translate-x-1/2 bg-signal/35 blur-md" />
             </h1>
 
@@ -1135,13 +1241,13 @@ export default function PortfolioPage() {
                 if (el) cards.current[index] = el;
               }}
               data-index={index}
-              className="stack-card group absolute left-1/2 top-1/2 block w-[280px] cursor-pointer text-left outline-none md:w-[520px] lg:w-[620px]"
+              className={`stack-card group absolute left-1/2 top-1/2 block w-[280px] cursor-pointer text-left outline-none md:w-[520px] lg:w-[620px] ${styles.stackCard}`}
               style={{
                 transformStyle: "preserve-3d",
               }}
             >
               <div
-                className="overflow-hidden border border-black/15 bg-white/35 shadow-[0_30px_90px_rgba(15,23,42,0.16)] backdrop-blur-sm transition duration-500 group-hover:bg-white/75 group-hover:shadow-[0_42px_140px_rgba(55,224,194,0.22)]"
+                className={`${styles.filmFrame} transition duration-500 group-hover:shadow-[0_42px_140px_rgba(55,224,194,0.22)]`}
                 style={{
                   filter: `brightness(${1 + exposureValue * 0.42}) saturate(${
                     1 + isoIndex * 0.025
@@ -1150,25 +1256,29 @@ export default function PortfolioPage() {
                   }px rgba(15,23,42,${0.08 + effectiveApertureIndex * 0.02}))`,
                 }}
               >
-                <div className="flex h-10 items-center justify-between bg-[#111827]/92 px-4 text-white">
-                  <p className="truncate text-xs font-semibold tracking-[0.12em]">
+                <div className={styles.filmHeader}>
+                  <p className="truncate">
                     {work.title}
                   </p>
-                  <p className="ml-4 shrink-0 text-xs text-white/65">
+                  <p className="ml-4 shrink-0 text-white/65">
                     {work.category}
                   </p>
                 </div>
 
-                <div className="relative overflow-hidden bg-black">
+                <div className={styles.filmViewport}>
                   <video
                     src={work.videoSrc}
                     muted
                     playsInline
                     preload="none"
                     poster={work.posterSrc}
-                    className="aspect-video w-full object-cover opacity-90 transition duration-700 group-hover:scale-[1.025] group-hover:opacity-100"
+                    className={`${styles.filmVideo} aspect-video object-cover opacity-90 transition duration-700 group-hover:scale-[1.025] group-hover:opacity-100`}
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                </div>
+
+                <div className={styles.filmFooter}>
+                  <span>FRAME {String(index + 1).padStart(2, "0")}</span>
+                  <span>JOESTAR / MOTION</span>
                 </div>
               </div>
             </article>
@@ -1177,27 +1287,32 @@ export default function PortfolioPage() {
 
         {activeWork &&
           createPortal(
-            <div className="player-overlay fixed inset-0 z-[9990] flex h-screen max-h-screen items-start justify-center overflow-y-auto bg-[#f4f1ea]/86 px-4 py-6 opacity-0 backdrop-blur-xl md:items-center md:px-6">
-              <article className="active-player w-full max-w-5xl overflow-hidden rounded-[28px] border border-black/10 bg-[#fffaf0]/95 p-4 opacity-0 shadow-[0_40px_150px_rgba(15,23,42,0.22)]">
-                <div className="mb-4 flex items-start justify-between gap-5 border-b border-black/10 pb-4">
+            <div className="player-overlay fixed inset-0 z-[9990] flex h-screen max-h-screen items-start justify-center overflow-y-auto bg-[#020607]/86 px-4 py-6 opacity-0 backdrop-blur-xl md:items-center md:px-6">
+              <article className="active-player w-full max-w-5xl overflow-hidden rounded-[28px] border border-white/10 bg-[rgba(7,17,19,0.94)] p-4 text-[#f4f1ea] opacity-0 shadow-[0_40px_150px_rgba(0,0,0,0.46)]">
+                <div className="mb-4 flex items-start justify-between gap-5 border-b border-white/10 pb-4">
                   <div>
                     <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-signal">
                       Selected Project
                     </p>
-                    <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[#111827] md:text-5xl">
+                    <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[#f4f1ea] md:text-5xl">
                       {activeWork.title}
                     </h2>
                   </div>
                   <button
                     type="button"
                     onClick={closeProject}
-                    className="shrink-0 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-[#111827] hover:text-white"
+                    className="shrink-0 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white/72 transition hover:bg-white hover:text-[#111827]"
                   >
                     关闭
                   </button>
                 </div>
 
-                <div className="overflow-hidden rounded-[24px] bg-black">
+                <div className={`${styles.filmFrame} ${styles.filmFrameLarge}`}>
+                  <div className={styles.filmHeader}>
+                    <span>{activeWork.category}</span>
+                    <span>SELECTED REEL</span>
+                  </div>
+                  <div className={styles.filmViewport}>
                   <video
                     src={activeWork.videoSrc}
                     controls
@@ -1206,19 +1321,24 @@ export default function PortfolioPage() {
                     playsInline
                     preload="metadata"
                     poster={activeWork.posterSrc}
-                    className="aspect-video max-h-[62vh] w-full bg-black object-contain"
+                    className={`${styles.filmVideo} aspect-video max-h-[62vh] object-contain`}
                   />
+                  </div>
+                  <div className={styles.filmFooter}>
+                    <span>PLAYBACK / FULL FRAME</span>
+                    <span>{activeWork.role}</span>
+                  </div>
                 </div>
 
                 <div className="mt-5 grid gap-5 md:grid-cols-[1fr_0.35fr]">
-                  <p className="text-sm leading-7 text-slate-700 md:text-base md:leading-8">
+                  <p className="text-sm leading-7 text-white/70 md:text-base md:leading-8">
                     {activeWork.description}
                   </p>
                   <div className="flex flex-wrap gap-2 md:justify-end">
                     {activeWork.role.split(" / ").map((item) => (
                       <span
                         key={item}
-                        className="rounded-full border border-black/10 bg-white/70 px-3 py-2 text-xs text-slate-700"
+                        className="rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs text-white/70"
                       >
                         {item.trim()}
                       </span>

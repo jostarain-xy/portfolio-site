@@ -1,0 +1,250 @@
+.gooeyNavContainer {
+  --color-1: #37e0c2;
+  --color-2: #8cc6ff;
+  --color-3: #ffffff;
+  --color-4: #b6fff2;
+
+  position: relative;
+  flex-shrink: 0;
+  overflow: visible;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 4%);
+  padding: 4px;
+  color: rgb(203 213 225);
+  font-size: 12px;
+  backdrop-filter: blur(14px);
+}
+
+.gooeyNavContainer nav {
+  position: relative;
+  display: flex;
+  transform: translate3d(0, 0, 0.01px);
+}
+
+.gooeyNavContainer nav ul {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  list-style: none;
+  text-shadow: 0 1px 1px hsl(205deg 30% 10% / 20%);
+}
+
+.gooeyNavContainer nav ul li {
+  position: relative;
+  color: rgb(203 213 225);
+  border-radius: 999px;
+  box-shadow: 0 0 0.5px 1.5px transparent;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.gooeyNavContainer nav ul li a {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  min-width: 58px;
+  padding: 8px 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  outline: none;
+}
+
+.gooeyNavContainer nav ul li:focus-within {
+  box-shadow: 0 0 0.5px 1.5px rgb(255 255 255 / 90%);
+}
+
+.gooeyNavContainer nav ul li::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background: white;
+  border-radius: 999px;
+  opacity: 0;
+  transform: scale(0.88);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.gooeyNavContainer nav ul li.activeItem {
+  color: black;
+  text-shadow: none;
+}
+
+.gooeyNavContainer nav ul li.activeItem::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 1;
+  place-items: center;
+}
+
+.text {
+  color: white;
+  font-weight: 700;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.text.active {
+  color: black;
+}
+
+.filter {
+  filter: blur(7px) contrast(48) blur(0);
+  mix-blend-mode: screen;
+}
+
+.filter::before {
+  position: absolute;
+  inset: -18px;
+  z-index: -2;
+  content: "";
+  background: transparent;
+}
+
+.filter::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background: white;
+  border-radius: 999px;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.effect.active::after {
+  animation: pill 0.3s ease both;
+}
+
+.particle,
+.point {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  opacity: 0;
+  transform-origin: center;
+}
+
+.particle {
+  --time: 5s;
+
+  position: absolute;
+  top: calc(50% - 7px);
+  left: calc(50% - 7px);
+  animation: particle var(--time) ease 1 -350ms;
+}
+
+.point {
+  background: var(--color);
+  opacity: 1;
+  animation: point var(--time) ease 1 -350ms;
+}
+
+@keyframes pill {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes particle {
+  0% {
+    opacity: 1;
+    transform: rotate(0deg) translate(var(--start-x), var(--start-y));
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+
+  70% {
+    opacity: 1;
+    transform: rotate(calc(var(--rotate) * 0.5)) translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2));
+    animation-timing-function: ease;
+  }
+
+  85% {
+    opacity: 1;
+    transform: rotate(calc(var(--rotate) * 0.66)) translate(var(--end-x), var(--end-y));
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(calc(var(--rotate) * 1.2)) translate(calc(var(--end-x) * 0.5), calc(var(--end-y) * 0.5));
+  }
+}
+
+@keyframes point {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+
+  25% {
+    transform: scale(calc(var(--scale) * 0.25));
+  }
+
+  38%,
+  85% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 1;
+    transform: scale(var(--scale));
+    animation-timing-function: ease;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .gooeyNavContainer {
+    font-size: 14px;
+  }
+
+  .gooeyNavContainer nav ul {
+    gap: 8px;
+  }
+
+  .gooeyNavContainer nav ul li a {
+    min-width: 72px;
+    padding: 11px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particle,
+  .point,
+  .effect.active::after {
+    animation: none;
+  }
+
+  .filter {
+    display: none;
+  }
+}

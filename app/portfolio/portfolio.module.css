@@ -1,0 +1,440 @@
+.filmFrame {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 18px 16px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 8%), transparent 36%),
+    linear-gradient(180deg, #151a1f 0%, #06080a 100%);
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 44%),
+    inset 0 18px 44px rgb(255 255 255 / 6%),
+    0 30px 90px rgb(15 23 42 / 16%);
+  backface-visibility: hidden;
+  contain: layout paint;
+  transform: translate3d(0, 0, 0);
+}
+
+.filmFrame::before,
+.filmFrame::after {
+  position: absolute;
+  right: 16px;
+  left: 16px;
+  z-index: 3;
+  height: 8px;
+  content: "";
+  background:
+    radial-gradient(ellipse 5px 3px at center, rgb(244 241 234 / 74%) 58%, transparent 62%)
+      0 0 / 28px 8px repeat-x;
+  opacity: 0.74;
+  pointer-events: none;
+}
+
+.filmFrame::before {
+  top: 7px;
+}
+
+.filmFrame::after {
+  bottom: 7px;
+}
+
+.filmFrameLarge {
+  padding: 22px 22px 20px;
+  border-radius: 28px;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 8%),
+    inset 0 24px 70px rgb(255 255 255 / 5%),
+    0 38px 130px rgb(15 23 42 / 24%);
+}
+
+.filmHeader,
+.filmFooter {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  color: rgb(244 241 234 / 84%);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.filmHeader {
+  padding: 2px 6px 12px;
+}
+
+.filmFooter {
+  padding: 12px 6px 0;
+  color: rgb(244 241 234 / 58%);
+}
+
+.filmViewport {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 16px;
+  background: #020304;
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 70%),
+    0 18px 42px rgb(0 0 0 / 28%);
+  transform: translate3d(0, 0, 0);
+}
+
+.filmViewport::before {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  content: "";
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 8%), transparent 17%, transparent 84%, rgb(255 255 255 / 6%)),
+    radial-gradient(circle at 50% 0%, rgb(255 255 255 / 10%), transparent 36%),
+    linear-gradient(to top, rgb(0 0 0 / 28%), transparent 40%);
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.filmVideo {
+  display: block;
+  width: 100%;
+  background: #020304;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+.stackCard {
+  backface-visibility: hidden;
+  contain: layout paint;
+  will-change: transform, opacity;
+}
+
+.cameraDock {
+  position: fixed;
+  top: 104px;
+  left: 16px;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  border: 1px solid;
+  box-shadow:
+    0 22px 80px rgb(0 0 0 / 28%),
+    inset 0 1px 0 rgb(255 255 255 / 18%);
+  backdrop-filter: blur(34px) saturate(160%);
+  -webkit-backdrop-filter: blur(34px) saturate(160%);
+  transform: translate3d(0, 0, 0);
+  transition:
+    width 0.46s cubic-bezier(0.2, 0.9, 0.2, 1),
+    min-height 0.46s cubic-bezier(0.2, 0.9, 0.2, 1),
+    padding 0.46s cubic-bezier(0.2, 0.9, 0.2, 1),
+    border-radius 0.46s cubic-bezier(0.2, 0.9, 0.2, 1),
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.cameraDockClosed {
+  width: 66px;
+  min-height: 66px;
+  grid-template-columns: 52px 0;
+  gap: 0;
+  padding: 6px;
+  border-radius: 999px;
+}
+
+.cameraDockOpen {
+  width: min(374px, calc(100vw - 24px));
+  min-height: 178px;
+  padding: 10px;
+  border-radius: 32px;
+}
+
+.cameraDockDark {
+  color: #e1fffa;
+  border-color: rgb(255 255 255 / 12%);
+  background: rgb(7 17 19 / 72%);
+}
+
+.cameraDockLight {
+  color: #142330;
+  border-color: rgb(15 23 42 / 10%);
+  background: rgb(255 255 255 / 70%);
+}
+
+.cameraShutter {
+  position: relative;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 28%, rgb(255 255 255 / 32%), transparent 24%),
+    linear-gradient(145deg, rgb(255 255 255 / 18%), rgb(255 255 255 / 4%)),
+    #111827;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 18%),
+    inset 0 -14px 26px rgb(0 0 0 / 38%),
+    0 12px 34px rgb(0 0 0 / 30%);
+  cursor: pointer;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.cameraShutter:hover {
+  transform: scale(1.035);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 24%),
+    inset 0 -14px 26px rgb(0 0 0 / 38%),
+    0 16px 42px rgb(55 224 194 / 18%);
+}
+
+.cameraShutter:active {
+  transform: scale(0.96);
+}
+
+.cameraShutterRing,
+.cameraShutterCore {
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cameraShutterRing {
+  inset: 8px;
+  border: 2px solid rgb(255 255 255 / 72%);
+  background: rgb(255 255 255 / 5%);
+}
+
+.cameraShutterCore {
+  inset: 17px;
+  background: #37e0c2;
+  box-shadow: 0 0 22px rgb(55 224 194 / 62%);
+}
+
+.cameraPanel {
+  min-width: 0;
+  overflow: hidden;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transform-origin: left center;
+  transition:
+    opacity 0.28s ease,
+    transform 0.36s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.cameraDockClosed .cameraPanel {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-8px) scale(0.98);
+}
+
+.cameraDockOpen .cameraPanel {
+  width: auto;
+}
+
+.cameraTopBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 2px 10px;
+}
+
+.cameraEyebrow {
+  margin: 0 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.46;
+}
+
+.cameraModeName {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  color: #37e0c2;
+}
+
+.cameraReadout {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  opacity: 0.62;
+}
+
+.cameraCollapseButton {
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: inherit;
+  background: rgb(255 255 255 / 10%);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cameraCollapseButton:hover {
+  background: rgb(255 255 255 / 18%);
+  transform: translateY(-1px);
+}
+
+.cameraModeGroup {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 18%);
+}
+
+.cameraModeButton {
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  color: inherit;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  opacity: 0.62;
+  transition:
+    background-color 0.26s ease,
+    color 0.26s ease,
+    opacity 0.26s ease,
+    transform 0.26s ease;
+}
+
+.cameraModeButton:hover {
+  opacity: 1;
+}
+
+.cameraModeButtonActive {
+  color: #071113;
+  background: #f4f7f5;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 20%);
+  opacity: 1;
+}
+
+.cameraControlGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cameraControlCard {
+  min-width: 0;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 19px;
+  padding: 10px 10px 9px;
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 11%), rgb(255 255 255 / 4%)),
+    rgb(255 255 255 / 5%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%);
+}
+
+.cameraControlCard span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.46;
+}
+
+.cameraControlCard select {
+  width: 100%;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.cameraControlCard option {
+  color: #111827;
+}
+
+.cameraControlDisabled {
+  opacity: 0.48;
+}
+
+.cameraControlDisabled select {
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .filmFrame {
+    padding: 14px 14px 13px;
+    border-radius: 20px;
+  }
+
+  .filmFrame::before,
+  .filmFrame::after {
+    right: 12px;
+    left: 12px;
+    background-size: 22px 7px;
+  }
+
+  .filmHeader,
+  .filmFooter {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  .filmHeader {
+    padding-bottom: 9px;
+  }
+
+  .filmFooter {
+    padding-top: 9px;
+  }
+
+  .filmViewport {
+    border-radius: 12px;
+  }
+
+  .cameraDock {
+    top: 96px;
+    left: 12px;
+  }
+
+  .cameraDockOpen {
+    width: min(352px, calc(100vw - 24px));
+  }
+
+  .cameraControlGrid {
+    gap: 6px;
+  }
+
+  .cameraControlCard {
+    padding: 9px 8px 8px;
+  }
+
+  .cameraControlCard select {
+    font-size: 12px;
+  }
+}

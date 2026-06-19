@@ -3,6 +3,10 @@
 import { type CSSProperties, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import BlurText from "@/components/blur-text";
+import BorderGlow from "@/components/border-glow";
+import GlareHover from "@/components/glare-hover";
+import SpotlightCard from "@/components/spotlight-card";
 import { withBasePath } from "@/lib/site-paths";
 import styles from "./about.module.css";
 
@@ -30,43 +34,59 @@ const services = [
   "内容结构整理",
 ];
 
-const introPhotoNumbers = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
-  "10",
-  "11",
-  "12",
-  "13",
-  "14",
-  "15",
-  "16",
-  "17",
-  "18",
-  "19",
-  "20",
-  "21",
-  "23",
-  "24",
-  "25",
-  "26",
-  "27",
-  "28",
-  "29",
+const introPhotoFiles = [
+  "01.jpg",
+  "02.jpg",
+  "03.jpg",
+  "04.jpg",
+  "05.jpg",
+  "06.jpg",
+  "07.jpg",
+  "08.jpg",
+  "09.jpg",
+  "10.jpg",
+  "11.jpg",
+  "12.jpg",
+  "13.jpg",
+  "14.jpg",
+  "15.jpg",
+  "16.jpg",
+  "17.jpg",
+  "18.jpg",
+  "19.jpg",
+  "20.jpg",
+  "21.jpg",
+  "23.jpg",
+  "24.jpg",
+  "25.jpg",
+  "26.jpg",
+  "27.jpg",
+  "28.jpg",
+  "29.jpg",
+  "30.png",
+  "31.jpg",
+  "33.png",
+  "35.png",
 ];
 
-const deferredIntroPhotoNumbers = new Set(["23", "24", "25", "26", "27", "28", "29"]);
+const deferredIntroPhotoFiles = new Set([
+  "23.jpg",
+  "24.jpg",
+  "25.jpg",
+  "26.jpg",
+  "27.jpg",
+  "28.jpg",
+  "29.jpg",
+  "30.png",
+  "31.jpg",
+  "33.png",
+  "35.png",
+]);
 
-const introPhotos = introPhotoNumbers.map((number) => ({
-  src: withBasePath(`/images/pic/${number}.jpg`),
-  alt: `入场照片 ${number}`,
-  defer: deferredIntroPhotoNumbers.has(number),
+const introPhotos = introPhotoFiles.map((file) => ({
+  src: withBasePath(`/images/pic/${file}`),
+  alt: `入场照片 ${file.replace(/\.[^.]+$/, "")}`,
+  defer: deferredIntroPhotoFiles.has(file),
 }));
 
 const introMasonryClasses = [
@@ -93,10 +113,10 @@ const studioSignals = [
 ];
 
 const timelineFrames = [
-  withBasePath("/images/pic/03.jpg"),
-  withBasePath("/images/pic/08.jpg"),
-  withBasePath("/images/pic/14.jpg"),
-  withBasePath("/images/pic/21.jpg"),
+  withBasePath("/images/pic/32.png"),
+  withBasePath("/images/pic/34.png"),
+  withBasePath("/images/pic/36.png"),
+  withBasePath("/images/pic/37.png"),
 ];
 
 const qaItems = [
@@ -322,11 +342,11 @@ export default function AboutPage() {
       className="relative min-h-screen overflow-hidden bg-[#edf7fb] text-[#10212b]"
     >
       <section className={`intro-loader fixed inset-0 z-50 overflow-hidden bg-[#b9dfff] text-[#10243a] ${styles.introLoader}`}>
-        <div className="relative z-10 grid h-[calc(100vh-78px)] grid-cols-4 grid-rows-[repeat(7,minmax(0,1fr))] gap-1.5 p-1.5 sm:grid-cols-7 sm:grid-rows-[repeat(4,minmax(0,1fr))] md:gap-3 md:p-3">
+        <div className={`relative z-10 grid h-screen ${styles.introGrid}`}>
           {introPhotos.map((photo, index) => (
             <figure
               key={photo.src}
-              className={`nrly-photo min-h-0 overflow-hidden bg-white shadow-[0_18px_44px_rgba(21,78,125,0.16)] will-change-transform ${styles.photo}`}
+              className={`nrly-photo min-h-0 overflow-hidden bg-white shadow-[0_18px_44px_rgba(21,78,125,0.16)] will-change-transform ${styles.photo} ${styles.photoFrame}`}
               style={{
                 animationDelay: `${0.42 + Math.abs(index - (introPhotos.length - 1) / 2) * 0.018}s`,
               }}
@@ -349,21 +369,28 @@ export default function AboutPage() {
 
         <div className={`nrly-center-card absolute left-1/2 top-1/2 z-20 flex w-[min(78vw,300px)] -translate-x-1/2 -translate-y-1/2 flex-col justify-between bg-[#b7ddff]/92 px-7 py-8 shadow-[0_20px_80px_rgba(21,78,125,0.24)] backdrop-blur-sm md:min-h-[360px] md:w-[min(24vw,360px)] ${styles.centerCard}`}>
           <div>
-            <p className="mb-7 text-[10px] font-semibold uppercase tracking-[0.24em] text-black/50">
-              个人介绍
+            <p className="mb-7 text-[15px] font-semibold uppercase tracking-[0.24em] text-black/50">
+              A B O U T
             </p>
-            <h2 className="font-serif text-[clamp(48px,8vw,88px)] font-normal italic leading-[0.78] tracking-[-0.06em] text-[#17334e]">
-              朱
-              <span className="block not-italic">星宇</span>
+            <h2 className={styles.introBrand} aria-label="JOE STAR">
+              <span className={styles.introBrandLine} data-text="JOE">
+                JOE
+              </span>
+              <span
+                className={`${styles.introBrandLine} ${styles.introBrandLineAlt}`}
+                data-text="STAR"
+              >
+                STAR
+              </span>
             </h2>
           </div>
 
           <div className="mt-8">
-            <p className="max-w-[210px] text-[10px] font-semibold uppercase leading-[1.08] tracking-[-0.04em] text-[#10243a]/75">
+            <p className="max-w-[300px] text-[20px] font-semibold uppercase leading-[1.08] tracking-[-0.04em] text-[#10243a]/75">
               摄影 / 剪辑 / 内容创作
             </p>
-            <p className="mt-5 text-[11px] font-semibold uppercase tracking-[-0.03em] text-[#10243a]/85">
-              查看资料 -&gt;
+            <p className="mt-5 text-[18px] font-semibold uppercase tracking-[-0.03em] text-[#10243a]/85">
+              载入中...
             </p>
           </div>
         </div>
@@ -438,14 +465,27 @@ export default function AboutPage() {
                     </div>
 
                     <h1 className={styles.statementTitle}>
-                      <span className={styles.statementLine}>
-                        音乐是我的
-                        <span className={styles.outlineWord}>输氧管</span>
-                      </span>
-                      <span className={styles.statementLine}>
-                        摄影是我的
-                        <span className={styles.solidWord}>呼吸机</span>
-                      </span>
+                      <BlurText
+                        as="span"
+                        className={styles.statementLine}
+                        direction="bottom"
+                        delay={120}
+                        parts={[
+                          { text: "音乐是我的" },
+                          { text: "输氧管", className: styles.outlineWord },
+                        ]}
+                      />
+                      <BlurText
+                        as="span"
+                        className={styles.statementLine}
+                        direction="bottom"
+                        delay={130}
+                        rootMargin="-8% 0px"
+                        parts={[
+                          { text: "摄影是我的" },
+                          { text: "呼吸机", className: styles.solidWord },
+                        ]}
+                      />
                     </h1>
                   </div>
                 </div>
@@ -583,7 +623,32 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="hero-reveal relative mt-4 overflow-hidden rounded-[28px] border border-black/10 bg-white/62 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.07)] backdrop-blur-xl">
+            <BorderGlow
+              className="hero-reveal mt-4"
+              edgeSensitivity={26}
+              glowColor="174 72 62"
+              backgroundColor="rgba(255,255,255,0.62)"
+              borderRadius={28}
+              glowRadius={34}
+              glowIntensity={0.86}
+              coneSpread={22}
+              animated
+              fillOpacity={0.26}
+              colors={["#37e0c2", "#8cc6ff", "#ffffff"]}
+            >
+              <GlareHover
+                width="100%"
+                height="auto"
+                background="rgba(255,255,255,0.42)"
+                borderRadius="28px"
+                borderColor="rgba(15,23,42,0.08)"
+                glareColor="#ffffff"
+                glareOpacity={0.34}
+                glareAngle={-28}
+                glareSize={260}
+                transitionDuration={820}
+              >
+                <div className="relative overflow-hidden p-5 backdrop-blur-xl">
               <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-signal/10 blur-3xl" />
 
               <div className="relative mb-5 flex items-end justify-between gap-4">
@@ -615,7 +680,9 @@ export default function AboutPage() {
                   </div>
                 ))}
               </div>
-            </div>
+                </div>
+              </GlareHover>
+            </BorderGlow>
           </aside>
         </section>
 
@@ -654,7 +721,10 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <section className="info-block group relative overflow-hidden rounded-[30px] border border-black/10 bg-[#101820] p-7 text-white shadow-[0_20px_70px_rgba(15,23,42,0.11)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_rgba(15,23,42,0.18)]">
+          <SpotlightCard
+            className="info-block group relative rounded-[30px] border border-black/10 bg-[#101820] p-7 text-white shadow-[0_20px_70px_rgba(15,23,42,0.11)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_rgba(15,23,42,0.18)]"
+            spotlightColor="rgba(55, 224, 194, 0.18)"
+          >
             <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-300/20 blur-3xl transition duration-500 group-hover:bg-signal/20" />
 
             <div className="mb-8 flex items-end justify-between gap-6">
@@ -691,7 +761,7 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-          </section>
+          </SpotlightCard>
         </div>
 
         <section className="info-block mt-5 rounded-[30px] border border-black/10 bg-white/58 p-7 shadow-[0_20px_70px_rgba(15,23,42,0.07)] backdrop-blur-xl">

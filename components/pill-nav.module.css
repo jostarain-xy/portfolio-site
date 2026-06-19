@@ -1,0 +1,149 @@
+.pillNavContainer {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.pillNav {
+  --nav-h: 44px;
+  --pill-pad-x: 16px;
+  --pill-gap: 4px;
+
+  display: flex;
+  align-items: center;
+  width: max-content;
+  box-sizing: border-box;
+}
+
+.pillNavItems {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--nav-h);
+  background: var(--base, #050a10);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 9999px;
+  box-shadow: 0 16px 36px rgb(2 8 15 / 24%);
+}
+
+.pillList {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  padding: 4px;
+  margin: 0;
+  list-style: none;
+  gap: var(--pill-gap);
+}
+
+.pillList > li {
+  display: flex;
+  height: 100%;
+}
+
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 var(--pill-pad-x);
+  overflow: hidden;
+  color: var(--pill-text, #050a10);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--pill-bg, #fff);
+  border-radius: 9999px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.hoverCircle {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+  background: var(--base, #050a10);
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.labelStack {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  line-height: 1;
+}
+
+.pillLabel {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  line-height: 1;
+  will-change: transform;
+}
+
+.pillLabelHover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: inline-block;
+  color: var(--hover-text, #fff);
+  line-height: 1;
+  will-change: transform, opacity;
+}
+
+.pillLabelHover::before {
+  content: attr(data-label);
+}
+
+.isActive::after {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  z-index: 4;
+  width: 12px;
+  height: 12px;
+  content: "";
+  background: var(--base, #050a10);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 700px) {
+  .pillNav {
+    --nav-h: 38px;
+    --pill-pad-x: 12px;
+    --pill-gap: 3px;
+  }
+
+  .pill {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 430px) {
+  .pillNav {
+    --pill-pad-x: 9px;
+  }
+
+  .pill {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hoverCircle,
+  .pillLabel,
+  .pillLabelHover {
+    transition: none;
+    animation: none;
+  }
+}
